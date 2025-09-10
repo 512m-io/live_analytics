@@ -153,9 +153,14 @@
                 font: { size: 9, family: 'serif' },
                 bgcolor: 'rgba(247,243,236,0.8)',
                 bordercolor: 'rgba(0,0,0,0.2)',
-                borderwidth: 1
+                borderwidth: 1,
+                orientation: 'h',
+                x: 0.5,
+                xanchor: 'center',
+                y: 1.02,
+                yanchor: 'bottom'
             },
-            margin: { l: 80, r: 50, t: 80, b: 80 },
+            margin: { l: 80, r: 50, t: 120, b: 80 },
             hovermode: 'x unified',
             
             // Logo watermark

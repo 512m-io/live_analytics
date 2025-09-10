@@ -217,13 +217,7 @@
                 color: '#333'
             },
             margin: { l: 80, r: 50, t: 80, b: 80 },
-            showlegend: true,
-            legend: {
-                font: { size: 9, family: 'serif' },
-                bgcolor: 'rgba(247,243,236,0.8)',
-                bordercolor: 'rgba(0,0,0,0.2)',
-                borderwidth: 1
-            },
+            showlegend: false,
             xaxis: {
                 title: { text: 'Date', font: { family: 'serif', size: 11 } },
                 showgrid: true,
@@ -300,9 +294,6 @@
                         <div style="font-size: 14px; font-weight: bold; margin-bottom: 8px; color: #333;">Pool Contributions Over Time Summary</div>
                         <div style="font-size: 12px; margin-bottom: 5px;">
                             <strong>Top Contributor:</strong> ${DISPLAY_POOL_NAMES[topContributor.poolNum] || `Pool ${topContributor.poolNum}`} (${topContributor.avgContribution.toFixed(2)}% avg)
-                        </div>
-                        <div style="font-size: 12px; margin-bottom: 8px;">
-                            <strong>Top ${totalPools} Pools Tracked</strong> • Stacked area shows evolution over time
                         </div>
                         <div style="font-size: 10px; color: #999;">
                             Data through: ${latestDate} • Updates every 4 hours
