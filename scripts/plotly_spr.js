@@ -255,14 +255,6 @@
         // Create container HTML
         const containerHtml = `
             <div id="defi-chart-container" style="width: 100%; max-width: 1200px; margin: 20px auto; padding: 0 15px;">
-                <div style="text-align: center; margin-bottom: 15px;">
-                    <div style="font-family: serif; font-size: 16px; color: #333; font-weight: bold;">
-                        Interactive Stablecoin Prime Rate Tracker
-                    </div>
-                    <div style="font-family: serif; font-size: 11px; color: #666; margin-top: 5px;">
-                        Real-time tracking of top stablecoin pool yields • Hover for details
-                    </div>
-                </div>
                 <div id="defi-chart" style="width: 100%; height: 600px; border: 1px solid #eee; border-radius: 8px;"></div>
                 <div id="defi-chart-stats"></div>
             </div>

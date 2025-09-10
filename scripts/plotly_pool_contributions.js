@@ -368,11 +368,6 @@
             containerDiv.id = 'pool-contributions-container';
             containerDiv.innerHTML = `
                 <div style="width: 100%; max-width: 1200px; margin: 20px auto; padding: 0 15px;">
-                    <div style="text-align: center; margin-bottom: 15px;">
-                        <div style="font-family: serif; font-size: 12px; color: #666;">
-                            Stacked area chart showing pool contributions evolution over time • Hover for details • Updates every 4 hours
-                        </div>
-                    </div>
                     <div id="pool-contributions-chart" style="width: 100%; height: 600px; border: 1px solid #eee; border-radius: 8px;"></div>
                     <div id="pool-contributions-stats"></div>
                 </div>
