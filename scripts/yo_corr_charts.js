@@ -14,10 +14,10 @@ const YoUSDCharts = (function() {
     
     // Configuration
     const CONFIG = {
-        poolDataUrl: 'https://dragmakex.github.io/512m_analytics/data/pool_data.json',
+        poolDataUrl: 'https://512m-io.github.io/live_analytics/data/pool_data.json',
         yoUSDPoolId: '1994cc35-a2b9-434e-b197-df6742fb5d81',
         yoUSDApiUrl: 'https://yields.llama.fi/chart/',
-        logoUrl: 'https://dragmakex.github.io/512m_analytics/512m_logo.png'
+        logoUrl: 'https://512m-io.github.io/live_analytics/512m_logo.png'
     };
     
     /**

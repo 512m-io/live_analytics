@@ -14,9 +14,9 @@
     
     // Configuration - Update these URLs after setting up GitHub Pages
     const CONFIG = {
-        dataUrl: 'https://dragmakex.github.io/512m_analytics/data/pool_data.json',
-        metadataUrl: 'https://dragmakex.github.io/512m_analytics/data/pool_metadata.json',
-        logoUrl: 'https://dragmakex.github.io/512m_analytics/512m_logo.png'
+        dataUrl: 'https://512m-io.github.io/live_analytics/data/pool_data.json',
+        metadataUrl: 'https://512m-io.github.io/live_analytics/data/pool_metadata.json',
+        logoUrl: 'https://512m-io.github.io/live_analytics/512m_logo.png'
     };
 
     // Theme colors matching your matplotlib design

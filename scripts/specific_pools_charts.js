@@ -22,7 +22,7 @@ const SpecificPoolsCharts = (function() {
         },
         defiLlamaUrl: 'https://yields.llama.fi/chart/',
         polygonApiKey: '', // Set this via initialize() or update directly
-        logoUrl: 'https://dragmakex.github.io/512m_analytics/512m_logo.png',
+        logoUrl: 'https://512m-io.github.io/live_analytics/512m_logo.png',
         defaultDays: 700
     };
     
