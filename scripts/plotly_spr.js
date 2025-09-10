@@ -33,7 +33,6 @@
         script.src = 'https://cdn.plot.ly/plotly-2.26.0.min.js';
         script.onload = callback;
         script.onerror = () => {
-            console.error('Failed to load Plotly.js');
             showError('Failed to load charting library');
         };
         document.head.appendChild(script);
@@ -42,7 +41,6 @@
     // Load data from GitHub Pages
     async function loadData() {
         try {
-            console.log('🔄 Loading Stablecoin Prime Rate data...');
             const response = await fetch(CONFIG.dataUrl);
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -59,11 +57,9 @@
                 ma_apy_14d: poolData[date].ma_apy_14d
             })).filter(row => row.weighted_apy !== null && row.ma_apy_14d !== null);
             
-            console.log(`✅ Loaded ${data.length} data points from ${dates[0]} to ${dates[dates.length-1]}`);
             return data;
             
         } catch (error) {
-            console.error('❌ Error loading data:', error);
             showError(`Data loading failed: ${error.message}`);
             return null;
         }
@@ -199,7 +195,6 @@
         // Add statistics below chart
         updateStats(data);
         
-        console.log('✅ Chart rendered successfully');
     }
 
     // Update statistics display
@@ -255,7 +250,6 @@
 
     // Main initialization function
     async function initializeChart() {
-        console.log('🚀 Initializing Stablecoin Prime Rate Chart...');
 
         // Create container HTML
         const containerHtml = `
@@ -288,7 +282,6 @@
     function setupAutoRefresh() {
         // Refresh every 4 hours (4 * 60 * 60 * 1000 ms)
         setInterval(() => {
-            console.log('🔄 Auto-refreshing chart data...');
             initializeChart();
         }, 4 * 60 * 60 * 1000);
     }

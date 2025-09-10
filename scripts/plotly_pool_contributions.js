@@ -51,7 +51,6 @@
         script.src = 'https://cdn.plot.ly/plotly-2.26.0.min.js';
         script.onload = callback;
         script.onerror = () => {
-            console.error('Failed to load Plotly.js');
             showError('Failed to load charting library');
         };
         document.head.appendChild(script);
@@ -60,7 +59,6 @@
     // Load data from GitHub Pages
     async function loadData() {
         try {
-            console.log('🔄 Loading Pool Contributions Over Time data...');
             const [dataResponse, metadataResponse] = await Promise.all([
                 fetchWithRetry(CONFIG.dataUrl),
                 fetchWithRetry(CONFIG.metadataUrl)
@@ -69,11 +67,9 @@
             const poolData = dataResponse.pool_data;
             const metadata = metadataResponse.pool_metadata;
             
-            console.log('✅ Loaded pool data over time');
             return { poolData, metadata };
             
         } catch (error) {
-            console.error('❌ Error loading data:', error);
             showError(`Data loading failed: ${error.message}`);
             return null;
         }
@@ -89,7 +85,6 @@
                 }
                 return await response.json();
             } catch (error) {
-                console.error(`Fetch attempt ${i + 1} failed:`, error);
                 if (i === maxRetries - 1) throw error;
                 await new Promise(resolve => setTimeout(resolve, delay));
             }
@@ -99,11 +94,9 @@
     // Calculate pool contributions over time
     function calculateContributionsOverTime(poolData, topN = 7) {
         try {
-            console.log('🔄 Calculating pool contributions...');
             
             // Calculate contributions over time
             const dates = Object.keys(poolData).sort();
-            console.log(`Processing ${dates.length} dates`);
             
             if (dates.length === 0) {
                 throw new Error('No dates found in pool data');
@@ -125,7 +118,6 @@
                 }
             });
             
-            console.log(`Found ${allPoolNames.size} pools:`, Array.from(allPoolNames));
             
             if (allPoolNames.size === 0) {
                 throw new Error('No pools found in data');
@@ -171,11 +163,9 @@
             
             const topPools = avgContributions.slice(0, topN);
             
-            console.log(`✅ Calculated contributions for top ${topPools.length} pools`);
             return { dates, contributionsOverTime, topPools };
             
         } catch (error) {
-            console.error('❌ Error calculating contributions:', error);
             throw error;
         }
     }
@@ -318,9 +308,7 @@
             // Add statistics below chart
             updateStats(topPools, dates);
             
-            console.log('✅ Pool Contributions Over Time chart rendered successfully');
         } catch (error) {
-            console.error('❌ Error creating chart:', error);
             showError(`Chart creation failed: ${error.message}`);
         }
     }
@@ -369,7 +357,6 @@
 
     // Main initialization function
     async function initializeChart() {
-        console.log('🚀 Initializing Pool Contributions Over Time Chart...');
 
         // Create container HTML
         const containerHtml = `
@@ -402,7 +389,6 @@
     function setupAutoRefresh() {
         // Refresh every 4 hours
         setInterval(() => {
-            console.log('🔄 Auto-refreshing Pool Contributions Over Time data...');
             initializeChart();
         }, 4 * 60 * 60 * 1000);
     }
