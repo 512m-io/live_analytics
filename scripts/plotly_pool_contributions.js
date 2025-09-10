@@ -98,64 +98,105 @@
 
     // Calculate pool contributions over time
     function calculateContributionsOverTime(poolData, topN = 7) {
-        // Calculate contributions over time
-        const dates = Object.keys(poolData).sort();
-        const contributionsOverTime = {};
-        
-        // Get all pool names
-        const allPoolNames = new Set();
-        dates.forEach(date => {
-            const data = poolData[date];
-            Object.keys(data).forEach(key => {
-                if (key.startsWith('apy_Pool_')) {
-                    const poolNum = key.replace('apy_Pool_', '');
-                    allPoolNames.add(poolNum);
-                }
-            });
-        });
-        
-        // Calculate contributions for each pool over time
-        allPoolNames.forEach(poolNum => {
-            contributionsOverTime[poolNum] = dates.map(date => {
+        try {
+            console.log('🔄 Calculating pool contributions...');
+            
+            // Calculate contributions over time
+            const dates = Object.keys(poolData).sort();
+            console.log(`Processing ${dates.length} dates`);
+            
+            if (dates.length === 0) {
+                throw new Error('No dates found in pool data');
+            }
+            
+            const contributionsOverTime = {};
+            
+            // Get all pool names
+            const allPoolNames = new Set();
+            dates.forEach(date => {
                 const data = poolData[date];
-                const apyKey = `apy_Pool_${poolNum}`;
-                const tvlKey = `tvlUsd_Pool_${poolNum}`;
-                
-                if (data[apyKey] !== null && data[tvlKey] !== null && data.weighted_apy !== null) {
-                    const totalTvl = Object.keys(data)
-                        .filter(k => k.startsWith('tvlUsd_'))
-                        .reduce((sum, k) => sum + (data[k] || 0), 0);
-                    
-                    if (totalTvl > 0 && data.weighted_apy > 0) {
-                        return (data[apyKey] * data[tvlKey]) / (data.weighted_apy * totalTvl) * 100;
-                    }
+                if (data) {
+                    Object.keys(data).forEach(key => {
+                        if (key.startsWith('apy_Pool_')) {
+                            const poolNum = key.replace('apy_Pool_', '');
+                            allPoolNames.add(poolNum);
+                        }
+                    });
                 }
-                return 0;
             });
-        });
-        
-        // Find top N pools by average contribution
-        const avgContributions = Object.entries(contributionsOverTime)
-            .map(([poolNum, contributions]) => ({
-                poolNum,
-                avgContribution: contributions.reduce((a, b) => a + b, 0) / contributions.length
-            }))
-            .sort((a, b) => b.avgContribution - a.avgContribution);
-        
-        const topPools = avgContributions.slice(0, topN);
-        
-        return { dates, contributionsOverTime, topPools };
+            
+            console.log(`Found ${allPoolNames.size} pools:`, Array.from(allPoolNames));
+            
+            if (allPoolNames.size === 0) {
+                throw new Error('No pools found in data');
+            }
+            
+            // Calculate contributions for each pool over time
+            allPoolNames.forEach(poolNum => {
+                contributionsOverTime[poolNum] = dates.map(date => {
+                    const data = poolData[date];
+                    if (!data) return 0;
+                    
+                    const apyKey = `apy_Pool_${poolNum}`;
+                    const tvlKey = `tvlUsd_Pool_${poolNum}`;
+                    
+                    if (data[apyKey] !== null && data[tvlKey] !== null && data.weighted_apy !== null) {
+                        const totalTvl = Object.keys(data)
+                            .filter(k => k.startsWith('tvlUsd_'))
+                            .reduce((sum, k) => sum + (data[k] || 0), 0);
+                        
+                        if (totalTvl > 0 && data.weighted_apy > 0) {
+                            const contribution = (data[apyKey] * data[tvlKey]) / (data.weighted_apy * totalTvl) * 100;
+                            return isNaN(contribution) ? 0 : contribution;
+                        }
+                    }
+                    return 0;
+                });
+            });
+            
+            // Find top N pools by average contribution
+            const avgContributions = Object.entries(contributionsOverTime)
+                .map(([poolNum, contributions]) => {
+                    const validContributions = contributions.filter(c => !isNaN(c) && isFinite(c));
+                    const avgContribution = validContributions.length > 0 
+                        ? validContributions.reduce((a, b) => a + b, 0) / validContributions.length 
+                        : 0;
+                    return {
+                        poolNum,
+                        avgContribution: isNaN(avgContribution) ? 0 : avgContribution
+                    };
+                })
+                .filter(pool => pool.avgContribution > 0)
+                .sort((a, b) => b.avgContribution - a.avgContribution);
+            
+            const topPools = avgContributions.slice(0, topN);
+            
+            console.log(`✅ Calculated contributions for top ${topPools.length} pools`);
+            return { dates, contributionsOverTime, topPools };
+            
+        } catch (error) {
+            console.error('❌ Error calculating contributions:', error);
+            throw error;
+        }
     }
 
     // Create the pool contributions over time stacked area chart
     function createChart(data) {
-        if (!data || !data.poolData) {
-            showError('No data available to display');
-            return;
-        }
+        try {
+            if (!data || !data.poolData) {
+                showError('No data available to display');
+                return;
+            }
 
-        const { poolData, metadata } = data;
-        const { dates, contributionsOverTime, topPools } = calculateContributionsOverTime(poolData, 7);
+            const { poolData, metadata } = data;
+            const result = calculateContributionsOverTime(poolData, 7);
+            
+            if (!result || !result.topPools || result.topPools.length === 0) {
+                showError('No valid pool data found for chart');
+                return;
+            }
+            
+            const { dates, contributionsOverTime, topPools } = result;
 
         // Create stacked area chart data
         const traces = [];
@@ -271,13 +312,17 @@
             }
         };
 
-        // Create the chart
-        Plotly.newPlot('pool-contributions-chart', traces, layout, config);
+            // Create the chart
+            Plotly.newPlot('pool-contributions-chart', traces, layout, config);
 
-        // Add statistics below chart
-        updateStats(topPools, dates);
-        
-        console.log('✅ Pool Contributions Over Time chart rendered successfully');
+            // Add statistics below chart
+            updateStats(topPools, dates);
+            
+            console.log('✅ Pool Contributions Over Time chart rendered successfully');
+        } catch (error) {
+            console.error('❌ Error creating chart:', error);
+            showError(`Chart creation failed: ${error.message}`);
+        }
     }
 
     // Update statistics display
@@ -304,26 +349,6 @@
         }
     }
 
-    // Show loading indicator
-    function showLoading() {
-        const container = document.getElementById('pool-contributions-chart');
-        if (container) {
-            container.innerHTML = `
-                <div style="text-align: center; padding: 40px; font-family: serif;">
-                    <div style="font-size: 18px; color: ${THEME_PALETTE[3]};">Loading pool contributions over time...</div>
-                    <div style="margin-top: 20px;">
-                        <div style="display: inline-block; width: 40px; height: 40px; border: 3px solid ${THEME_PALETTE[1]}; 
-                                    border-radius: 50%; border-top-color: ${THEME_PALETTE[3]}; animation: spin 1s linear infinite;"></div>
-                    </div>
-                </div>
-                <style>
-                    @keyframes spin {
-                        to { transform: rotate(360deg); }
-                    }
-                </style>
-            `;
-        }
-    }
 
     // Show error message
     function showError(message) {
@@ -346,32 +371,23 @@
     async function initializeChart() {
         console.log('🚀 Initializing Pool Contributions Over Time Chart...');
 
-        // Create container HTML if it doesn't exist
-        let mainContainer = document.getElementById('pool-contributions-container');
-        if (!mainContainer) {
-            // Try to find any suitable container or create one
-            mainContainer = document.querySelector('#pool-contributions-chart-container') || 
-                           document.querySelector('.pool-contributions-container') ||
-                           document.body;
-            
-            // Create our container
-            const containerDiv = document.createElement('div');
-            containerDiv.id = 'pool-contributions-container';
-            containerDiv.innerHTML = `
-                <div style="width: 100%; max-width: 1200px; margin: 20px auto; padding: 0 15px;">
-                    <div id="pool-contributions-chart" style="width: 100%; height: 600px; border: 1px solid #eee; border-radius: 8px;"></div>
-                    <div id="pool-contributions-stats"></div>
-                </div>
-            `;
-            
-            if (mainContainer === document.body) {
-                document.body.appendChild(containerDiv);
-            } else {
-                mainContainer.appendChild(containerDiv);
-            }
-        }
+        // Create container HTML
+        const containerHtml = `
+            <div id="pool-contributions-container" style="width: 100%; max-width: 1200px; margin: 20px auto; padding: 0 15px;">
+                <div id="pool-contributions-chart" style="width: 100%; height: 600px; border: 1px solid #eee; border-radius: 8px;"></div>
+                <div id="pool-contributions-stats"></div>
+            </div>
+        `;
 
-        showLoading();
+        // Find target container or create one
+        let targetContainer = document.getElementById('pool-contributions-main');
+        if (!targetContainer) {
+            targetContainer = document.createElement('div');
+            targetContainer.id = 'pool-contributions-main';
+            document.body.appendChild(targetContainer);
+        }
+        
+        targetContainer.innerHTML = containerHtml;
 
         // Load Plotly and create chart
         loadPlotly(async () => {
