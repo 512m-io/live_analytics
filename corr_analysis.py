@@ -7,7 +7,6 @@ and time series visualizations.
 """
 
 import os
-import requests
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -246,34 +245,9 @@ def create_beta_line_plots(returns: pd.DataFrame) -> None:
     
     fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(12, 10))
     
-    # Calculate beta series with improved error handling
-    spy_var_30d = returns['SPY'].rolling(window=30).var()
-    spy_var_90d = returns['SPY'].rolling(window=90).var()
-    spy_var_180d = returns['SPY'].rolling(window=180).var()
-    btc_var_30d = returns['BTC'].rolling(window=30).var()
-    btc_var_90d = returns['BTC'].rolling(window=90).var()
-    btc_var_180d = returns['BTC'].rolling(window=180).var()
-    
-    # BTC-SPY betas
-    btc_spy_30d = returns['BTC'].rolling(window=30).cov(returns['SPY']) / spy_var_30d.where(spy_var_30d > 1e-10, np.nan)
-    btc_spy_90d = returns['BTC'].rolling(window=90).cov(returns['SPY']) / spy_var_90d.where(spy_var_90d > 1e-10, np.nan)
-    btc_spy_180d = returns['BTC'].rolling(window=180).cov(returns['SPY']) / spy_var_180d.where(spy_var_180d > 1e-10, np.nan)
-    
-    _plot_beta_series(ax1, btc_spy_30d, btc_spy_90d, btc_spy_180d, 'Bitcoin-SPY Beta')
-    
-    # ETH-SPY betas
-    eth_spy_30d = returns['ETH'].rolling(window=30).cov(returns['SPY']) / spy_var_30d.where(spy_var_30d > 1e-10, np.nan)
-    eth_spy_90d = returns['ETH'].rolling(window=90).cov(returns['SPY']) / spy_var_90d.where(spy_var_90d > 1e-10, np.nan)
-    eth_spy_180d = returns['ETH'].rolling(window=180).cov(returns['SPY']) / spy_var_180d.where(spy_var_180d > 1e-10, np.nan)
-    
-    _plot_beta_series(ax2, eth_spy_30d, eth_spy_90d, eth_spy_180d, 'Ethereum-SPY Beta')
-    
-    # ETH-BTC betas
-    eth_btc_30d = returns['ETH'].rolling(window=30).cov(returns['BTC']) / btc_var_30d.where(btc_var_30d > 1e-10, np.nan)
-    eth_btc_90d = returns['ETH'].rolling(window=90).cov(returns['BTC']) / btc_var_90d.where(btc_var_90d > 1e-10, np.nan)
-    eth_btc_180d = returns['ETH'].rolling(window=180).cov(returns['BTC']) / btc_var_180d.where(btc_var_180d > 1e-10, np.nan)
-    
-    _plot_beta_series(ax3, eth_btc_30d, eth_btc_90d, eth_btc_180d, 'Ethereum-Bitcoin Beta')
+    _plot_beta_for_pair(ax1, returns, 'BTC', 'SPY', 'Bitcoin-SPY Beta')
+    _plot_beta_for_pair(ax2, returns, 'ETH', 'SPY', 'Ethereum-SPY Beta')
+    _plot_beta_for_pair(ax3, returns, 'ETH', 'BTC', 'Ethereum-Bitcoin Beta')
     
     # Format x-axis dates for all subplots
     for ax in [ax1, ax2, ax3]:
@@ -284,6 +258,15 @@ def create_beta_line_plots(returns: pd.DataFrame) -> None:
     
     plt.tight_layout()
     plt.show()
+
+def _plot_beta_for_pair(ax: plt.Axes, returns: pd.DataFrame, dependent: str, independent: str, title: str) -> None:
+    """Calculate and plot beta series for a given asset pair."""
+    beta_30d = calculate_rolling_beta(returns[dependent], returns[independent], window=30)
+    beta_90d = calculate_rolling_beta(returns[dependent], returns[independent], window=90)
+    beta_180d = calculate_rolling_beta(returns[dependent], returns[independent], window=180)
+    
+    _plot_beta_series(ax, beta_30d, beta_90d, beta_180d, title)
+
 
 
 def _plot_beta_series(ax: plt.Axes, beta_30d: pd.Series, beta_90d: pd.Series, beta_180d: pd.Series, title: str) -> None:
@@ -306,7 +289,7 @@ def main() -> None:
     Main function to perform comprehensive correlation analysis.
     """
     try:
-        # Fetch all market data
+        # Step 1: Fetch market data for BTC, ETH, and SPY
         print("=== Market Correlation Analysis ===")
         data = fetch_all_market_data(days=730)
         
@@ -314,14 +297,14 @@ def main() -> None:
             print("Failed to fetch market data. Exiting.")
             return
         
-        # Prepare combined dataset
+        # Step 2: Prepare a combined dataset with a common date range
         combined_df = prepare_combined_dataset(data)
         
         if combined_df is None:
             print("Failed to prepare combined dataset. Exiting.")
             return
         
-        # Calculate returns
+        # Step 3: Calculate daily returns
         returns = combined_df.pct_change().dropna()
         print_data_summary(returns, "Returns Data")
         
@@ -329,13 +312,13 @@ def main() -> None:
             print("No returns data available. Exiting.")
             return
         
-        # Define analysis parameters
+        # Step 4: Define analysis parameters
         windows = list(range(14, 181, 14))  # From 14 to 180 days, step 14
         
-        # Calculate correlation matrices
+        # Step 5: Calculate rolling correlation matrices
         correlation_data = calculate_correlation_matrices(returns, windows, plot_days=360)
         
-        # Create visualizations
+        # Step 6: Create and display visualizations
         print("\n=== Creating Correlation Heatmaps ===")
         create_correlation_heatmaps(correlation_data, windows)
         
@@ -347,6 +330,7 @@ def main() -> None:
     except Exception as e:
         print(f"Error in main analysis: {e}")
         raise
+
 
 
 if __name__ == "__main__":

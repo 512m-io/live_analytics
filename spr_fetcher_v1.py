@@ -89,6 +89,25 @@ def merge_and_save_pool_data(pool_data: Dict[str, Dict[str, Any]],
     Returns:
         Merged and cleaned DataFrame, or None if failed
     """
+    merged_df = _merge_pool_dataframes(pool_data)
+    if merged_df is None or merged_df.empty:
+        print("No data to merge. Exiting.")
+        return None
+
+    print(f"Successfully merged data for {len(pool_data)} pools")
+    
+    merged_df = _clean_merged_data(merged_df)
+    
+    merged_df = _calculate_weighted_metrics(merged_df)
+    
+    # Save data to both SQLite and JSON
+    _save_to_database(merged_df, pool_data, db_filename)
+    _save_to_json(merged_df, pool_data, json_filename)
+    
+    return merged_df
+
+def _merge_pool_dataframes(pool_data: Dict[str, Dict[str, Any]]) -> Optional[pd.DataFrame]:
+    """Merge individual pool dataframes into a single dataframe."""
     print("Merging pool data...")
     merged_df = None
     
@@ -118,22 +137,9 @@ def merge_and_save_pool_data(pool_data: Dict[str, Dict[str, Any]],
                 merged_df = df_subset
             else:
                 merged_df = pd.merge(merged_df, df_subset, left_index=True, right_index=True, how='outer')
-    
-    if merged_df is None or merged_df.empty:
-        print("No data to merge. Exiting.")
-        return None
-    
-    print(f"Successfully merged data for {len(pool_data)} pools")
-    
-    merged_df = _clean_merged_data(merged_df)
-    
-    merged_df = _calculate_weighted_metrics(merged_df)
-    
-    # Save data to both SQLite and JSON
-    _save_to_database(merged_df, pool_data, db_filename)
-    _save_to_json(merged_df, pool_data, json_filename)
-    
+                
     return merged_df
+
 
 
 def _clean_merged_data(merged_df: pd.DataFrame) -> pd.DataFrame:
