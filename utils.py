@@ -139,62 +139,56 @@ def _process_timestamp_column(df: pd.DataFrame, pool_name: str) -> Optional[pd.D
     return df
 
 
-def fetch_ethereum_price_data(start_date: datetime, end_date: datetime) -> Optional[pd.DataFrame]:
+def fetch_polygon_data(symbol: str, start_date: str, end_date: str, api_key: str) -> Optional[pd.DataFrame]:
     """
-    Fetch Ethereum price data from Polygon API.
+    Fetch data from Polygon.io API for a specific symbol.
     
     Args:
-        start_date: Start date for data
-        end_date: End date for data
+        symbol: Asset symbol (e.g., 'BTC', 'ETH', 'SPY')
+        start_date: Start date in YYYY-MM-DD format
+        end_date: End date in YYYY-MM-DD format
+        api_key: Polygon API key
         
     Returns:
-        DataFrame with Ethereum price data, or None if failed
+        DataFrame with price data, or None if failed
     """
+    base_url = API_ENDPOINTS['polygon_base']
+    
+    # Determine if the symbol is a crypto or stock ticker
+    if symbol.upper() in ['BTC', 'ETH']:
+        url = f"{base_url}/v2/aggs/ticker/X:{symbol.upper()}USD/range/1/day/{start_date}/{end_date}"
+    else:
+        url = f"{base_url}/v2/aggs/ticker/{symbol.upper()}/range/1/day/{start_date}/{end_date}"
+    
+    params = {
+        'apiKey': api_key,
+        'adjusted': 'true',
+        'sort': 'asc'
+    }
+    
     try:
-        api_key = os.getenv('POLYGON_API_KEY')
+        print(f"Fetching data for {symbol}...")
+        response = requests.get(url, params=params)
+        response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
         
-        if not api_key:
-            print("Warning: POLYGON_API_KEY not found in environment variables")
-            return None
+        data = response.json()
         
-        start_str = start_date.strftime('%Y-%m-%d')
-        end_str = end_date.strftime('%Y-%m-%d')
-        
-        url = f"{API_ENDPOINTS['polygon_base']}/v2/aggs/ticker/X:ETHUSD/range/1/day/{start_str}/{end_str}?adjusted=true&sort=asc&limit=50000&apiKey={api_key}"
-        
-        print(f"Fetching Ethereum price data from {start_str} to {end_str}...")
-        response = requests.get(url)
-        
-        if response.status_code == 200:
-            data = response.json()
+        if data.get('results'):
+            df = pd.DataFrame(data['results'])
+            df['date'] = pd.to_datetime(df['t'], unit='ms')
+            df = df[['date', 'c']].rename(columns={'c': 'close'})
+            df.set_index('date', inplace=True)
             
-            if data.get('results'):
-                price_data = []
-                for result in data['results']:
-                    price_data.append({
-                        'date': datetime.fromtimestamp(result['t'] / 1000),
-                        'open': result['o'],
-                        'high': result['h'],
-                        'low': result['l'],
-                        'close': result['c'],
-                        'volume': result['v']
-                    })
-                
-                df = pd.DataFrame(price_data)
-                df.set_index('date', inplace=True)
-                
-                print(f"Successfully fetched {len(df)} days of Ethereum price data")
-                return df
-            else:
-                print("No results found in Polygon API response")
-                return None
+            print(f"Successfully fetched {len(df)} data points for {symbol}")
+            return df
         else:
-            print(f"Error fetching Ethereum price data: {response.status_code}")
+            print(f"No data returned for {symbol}")
             return None
             
-    except Exception as e:
-        print(f"Error fetching Ethereum price data: {e}")
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching {symbol}: {e}")
         return None
+
 
 
 def load_data_from_db(db_filename: str = DEFAULT_DB_FILENAME) -> Tuple[Optional[pd.DataFrame], Optional[pd.DataFrame]]:
@@ -302,30 +296,24 @@ def calculate_rolling_beta(dependent_series: pd.Series, independent_series: pd.S
     Returns:
         Series with rolling beta values
     """
-    beta_series = pd.Series(index=dependent_series.index, dtype=float)
+    # Calculate returns
+    dep_returns = dependent_series.pct_change().dropna()
+    indep_returns = independent_series.pct_change().dropna()
     
-    for i in range(min_periods-1, len(dependent_series)):
-        start_idx = max(0, i - window + 1)
-        dep_window = dependent_series.iloc[start_idx:i+1]
-        indep_window = independent_series.iloc[start_idx:i+1]
-        
-        if len(dep_window) >= min_periods:
-            dep_returns = dep_window.diff().dropna()
-            indep_returns = indep_window.diff().dropna()
-            
-            if len(dep_returns) > 1 and len(indep_returns) > 1:
-                common_idx = dep_returns.index.intersection(indep_returns.index)
-                if len(common_idx) > 1:
-                    dep_aligned = dep_returns.loc[common_idx]
-                    indep_aligned = indep_returns.loc[common_idx]
-                    
-                    covariance = np.cov(dep_aligned, indep_aligned)[0, 1]
-                    market_variance = np.var(indep_aligned)
-                    
-                    if market_variance > 0:
-                        beta_series.iloc[i] = covariance / market_variance
+    # Align the series
+    aligned_dep, aligned_indep = dep_returns.align(indep_returns, join='inner')
     
-    return beta_series
+    # Rolling covariance
+    rolling_cov = aligned_dep.rolling(window=window, min_periods=min_periods).cov(aligned_indep)
+    
+    # Rolling variance of the independent series
+    rolling_var = aligned_indep.rolling(window=window, min_periods=min_periods).var()
+    
+    # Calculate beta
+    beta = rolling_cov / rolling_var
+    
+    return beta
+
 
 
 def purge_database(db_filename: str = DEFAULT_DB_FILENAME) -> None:
@@ -472,54 +460,7 @@ def print_data_summary(df: pd.DataFrame, name: str = "Dataset") -> None:
                 print(f"  {col}: {count} ({count/len(df)*100:.1f}%)")
 
 
-def fetch_polygon_data(symbol: str, start_date: str, end_date: str, api_key: str) -> Optional[pd.DataFrame]:
-    """
-    Fetch data from Polygon.io API for a specific symbol.
-    
-    Args:
-        symbol: Asset symbol (BTC, ETH, SPY, etc.)
-        start_date: Start date in YYYY-MM-DD format
-        end_date: End date in YYYY-MM-DD format
-        api_key: Polygon API key
-        
-    Returns:
-        DataFrame with price data, or None if failed
-    """
-    base_url = API_ENDPOINTS['polygon_base']
-    
-    if symbol in ['BTC', 'ETH']:
-        url = f"{base_url}/v2/aggs/ticker/X:{symbol}USD/range/1/day/{start_date}/{end_date}"
-    else:
-        url = f"{base_url}/v2/aggs/ticker/{symbol}/range/1/day/{start_date}/{end_date}"
-    
-    params = {
-        'apiKey': api_key,
-        'adjusted': 'true',
-        'sort': 'asc'
-    }
-    
-    try:
-        print(f"Fetching data for {symbol}...")
-        response = requests.get(url, params=params)
-        response.raise_for_status()
-        
-        data = response.json()
-        
-        if data.get('results'):
-            df = pd.DataFrame(data['results'])
-            df['date'] = pd.to_datetime(df['t'], unit='ms')
-            df = df[['date', 'c']].rename(columns={'c': 'close'})
-            df.set_index('date', inplace=True)
-            
-            print(f"Successfully fetched {len(df)} data points for {symbol}")
-            return df
-        else:
-            print(f"No data returned for {symbol}")
-            return None
-            
-    except Exception as e:
-        print(f"Error fetching {symbol}: {e}")
-        return None
+
 
 
 def create_subplot_grid(nrows: int, ncols: int, figsize: Tuple[int, int] = (16, 12)) -> Tuple[plt.Figure, np.ndarray]:

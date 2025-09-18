@@ -5,6 +5,7 @@ This module contains all constants, API endpoints, plotting styles, and configur
 settings used across the project to ensure consistency and eliminate duplication.
 """
 
+import logging.config
 from typing import Dict, List
 import matplotlib.pyplot as plt
 
