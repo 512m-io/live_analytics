@@ -31,7 +31,7 @@ jobs:
       env:
         POLYGON_API_KEY: ${{ secrets.POLYGON_API_KEY }}
       run: |
-        python spr_fetcher_v1.py
+        python scripts/spr_fetcher_v1.py
     
     - name: Configure git
       run: |
