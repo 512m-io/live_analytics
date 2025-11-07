@@ -16,7 +16,7 @@
     const CONFIG = {
         dataUrl: 'https://512m-io.github.io/live_analytics/data/pool_data.json',
         metadataUrl: 'https://512m-io.github.io/live_analytics/data/pool_metadata.json',
-        logoUrl: 'https://512m-io.github.io/live_analytics/512m_logo.png'
+        logoUrl: 'https://512m-io.github.io/live_analytics/public/512m_logo.png'
     };
 
     // Theme colors matching Python matplotlib style
