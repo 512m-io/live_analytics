@@ -47,7 +47,7 @@ MUTED_BLUES = [
 ]
 
 # Logo Configuration
-DEFAULT_LOGO_PATH = "512m_logo.png"
+DEFAULT_LOGO_PATH = "public/512m_logo.png"
 DEFAULT_LOGO_ALPHA = 0.05
 
 # Data Fetching Configuration

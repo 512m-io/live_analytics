@@ -27,18 +27,23 @@
         '#86abc7', '#9bbad1', '#afc8da', '#c3d5e3', '#d7e2ec'
     ];
     
-    // Display names for pools
-    const DISPLAY_POOL_NAMES = {
-        '0': 'Ethena sUSDe',
-        '1': 'Maple USDC',
-        '2': 'Sky sUSDS',
-        '3': 'AAVE USDT',
-        '4': 'Morpho Spark USDC',
-        '5': 'Sky DSR DAI',
-        '6': 'Usual USD0++',
-        '10': 'Morpho USUALUSDC+',
-        '13': 'Fluid USDC'
-    };
+    // Build mapping from pool IDs to pool metadata
+    function buildPoolMapping(metadata) {
+        const poolMapping = {};
+        metadata.forEach(pool => {
+            const projectFormatted = pool.project.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
+            const symbolFormatted = pool.symbol.toUpperCase();
+
+            poolMapping[pool.pool_id] = {
+                project: pool.project,
+                symbol: pool.symbol,
+                chain: pool.chain,
+                // Generate display name as "ProjectFormatted symbolFormatted"
+                displayName: `${projectFormatted} ${symbolFormatted}`
+            };
+        });
+        return poolMapping;
+    }
 
     // Check if Plotly is already loaded, if not load it
     function loadPlotly(callback) {
@@ -104,39 +109,38 @@
             
             const contributionsOverTime = {};
             
-            // Get all pool names
-            const allPoolNames = new Set();
+            // Get all pool IDs (handle both new pool_id format and legacy Pool_N format)
+            const allPoolIds = new Set();
             dates.forEach(date => {
                 const data = poolData[date];
                 if (data) {
                     Object.keys(data).forEach(key => {
-                        if (key.startsWith('apy_Pool_')) {
-                            const poolNum = key.replace('apy_Pool_', '');
-                            allPoolNames.add(poolNum);
+                        if (key.startsWith('apy_')) {
+                            const identifier = key.replace('apy_', '');
+                            allPoolIds.add(identifier);
                         }
                     });
                 }
             });
-            
-            
-            if (allPoolNames.size === 0) {
+
+            if (allPoolIds.size === 0) {
                 throw new Error('No pools found in data');
             }
-            
+
             // Calculate contributions for each pool over time
-            allPoolNames.forEach(poolNum => {
-                contributionsOverTime[poolNum] = dates.map(date => {
+            allPoolIds.forEach(identifier => {
+                contributionsOverTime[identifier] = dates.map(date => {
                     const data = poolData[date];
                     if (!data) return 0;
-                    
-                    const apyKey = `apy_Pool_${poolNum}`;
-                    const tvlKey = `tvlUsd_Pool_${poolNum}`;
-                    
+
+                    const apyKey = `apy_${identifier}`;
+                    const tvlKey = `tvlUsd_${identifier}`;
+
                     if (data[apyKey] !== null && data[tvlKey] !== null && data.weighted_apy !== null) {
                         const totalTvl = Object.keys(data)
                             .filter(k => k.startsWith('tvlUsd_'))
                             .reduce((sum, k) => sum + (data[k] || 0), 0);
-                        
+
                         if (totalTvl > 0 && data.weighted_apy > 0) {
                             const contribution = (data[apyKey] * data[tvlKey]) / (data.weighted_apy * totalTvl) * 100;
                             return isNaN(contribution) ? 0 : contribution;
@@ -148,19 +152,19 @@
             
             // Find top N pools by average contribution
             const avgContributions = Object.entries(contributionsOverTime)
-                .map(([poolNum, contributions]) => {
+                .map(([identifier, contributions]) => {
                     const validContributions = contributions.filter(c => !isNaN(c) && isFinite(c));
-                    const avgContribution = validContributions.length > 0 
-                        ? validContributions.reduce((a, b) => a + b, 0) / validContributions.length 
+                    const avgContribution = validContributions.length > 0
+                        ? validContributions.reduce((a, b) => a + b, 0) / validContributions.length
                         : 0;
                     return {
-                        poolNum,
+                        identifier,
                         avgContribution: isNaN(avgContribution) ? 0 : avgContribution
                     };
                 })
                 .filter(pool => pool.avgContribution > 0)
                 .sort((a, b) => b.avgContribution - a.avgContribution);
-            
+
             const topPools = avgContributions.slice(0, topN);
             
             return { dates, contributionsOverTime, topPools };
@@ -179,6 +183,10 @@
             }
 
             const { poolData, metadata } = data;
+
+            // Build pool mapping from metadata
+            const poolMapping = buildPoolMapping(metadata);
+
             const result = calculateContributionsOverTime(poolData, 7);
             
             if (!result || !result.topPools || result.topPools.length === 0) {
@@ -194,13 +202,14 @@
         
         // Add top pools in reverse order (so highest contributors are at top of stack)
         topPools.reverse().forEach((pool, idx) => {
-            const displayName = DISPLAY_POOL_NAMES[pool.poolNum] || `Pool_${pool.poolNum}`;
+            const poolInfo = poolMapping[pool.identifier];
+            const displayName = poolInfo ? poolInfo.displayName : `Pool_${pool.identifier}`;
             traces.push({
                 x: dateObjects,
-                y: contributionsOverTime[pool.poolNum],
+                y: contributionsOverTime[pool.identifier],
                 type: 'scatter',
                 mode: 'lines',
-                name: `${displayName} (${pool.avgContribution.toFixed(1)}%)`,
+                name: displayName,
                 stackgroup: 'one',
                 fillcolor: MUTED_BLUES[idx % MUTED_BLUES.length],
                 line: { width: 0.5 },
@@ -210,11 +219,11 @@
                               '<extra></extra>'
             });
         });
-        
+
         // Add "Other pools" category
         const otherContributions = dates.map((_, dateIdx) => {
-            const topTotal = topPools.reduce((sum, pool) => 
-                sum + contributionsOverTime[pool.poolNum][dateIdx], 0
+            const topTotal = topPools.reduce((sum, pool) =>
+                sum + contributionsOverTime[pool.identifier][dateIdx], 0
             );
             return 100 - topTotal;
         });
@@ -306,7 +315,7 @@
             Plotly.newPlot('pool-contributions-chart', traces, layout, config);
 
             // Add statistics below chart
-            updateStats(topPools, dates);
+            updateStats(topPools, dates, poolMapping);
             
         } catch (error) {
             showError(`Chart creation failed: ${error.message}`);
@@ -314,11 +323,14 @@
     }
 
     // Update statistics display
-    function updateStats(topPools, dates) {
+    function updateStats(topPools, dates, poolMapping) {
         const totalPools = topPools.length;
         const topContributor = topPools[topPools.length - 1]; // Since we reversed the array
         const latestDate = dates[dates.length - 1];
-        
+
+        const poolInfo = poolMapping[topContributor.identifier];
+        const displayName = poolInfo ? poolInfo.displayName : `Pool ${topContributor.identifier}`;
+
         const statsContainer = document.getElementById('pool-contributions-stats');
         if (statsContainer) {
             statsContainer.innerHTML = `
@@ -326,7 +338,7 @@
                     <div style="background: rgba(247,243,236,0.9); padding: 15px; border-radius: 8px; border: 1px solid #ddd; display: inline-block;">
                         <div style="font-size: 14px; font-weight: bold; margin-bottom: 8px; color: #333;">Pool Contributions Over Time Summary</div>
                         <div style="font-size: 12px; margin-bottom: 5px;">
-                            <strong>Top Contributor:</strong> ${DISPLAY_POOL_NAMES[topContributor.poolNum] || `Pool ${topContributor.poolNum}`} (${topContributor.avgContribution.toFixed(2)}% avg)
+                            <strong>Top Contributor:</strong> ${displayName} (${topContributor.avgContribution.toFixed(2)}% avg)
                         </div>
                         <div style="font-size: 10px; color: #999;">
                             Data through: ${latestDate} • Updates every 4 hours

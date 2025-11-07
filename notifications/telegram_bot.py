@@ -179,7 +179,7 @@ class MessageFormatter:
 • Prime Rate: {prime_rate_change}
 • 14-Day MA: {ma_14d_change}
 
-🔗 Check out the full analytics on <a href="https://512m.io">512m.io</a>!
+🔗 Check out the full analytics on <a href="https://512m.io/analytics">512m.io/analytics</a>!
 
 <i>Data from {pool_count} stablecoin pools</i>"""
         

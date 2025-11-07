@@ -129,8 +129,8 @@ def _merge_pool_dataframes(pool_data: Dict[str, Dict[str, Any]]) -> Optional[pd.
                 df_subset = df_subset.groupby(df_subset.index).mean()
             
             df_subset = df_subset.rename(columns={
-                'apy': f'apy_{pool_name}',
-                'tvlUsd': f'tvlUsd_{pool_name}'
+                'apy': f'apy_{pool_id}',
+                'tvlUsd': f'tvlUsd_{pool_id}'
             })
             
             if merged_df is None:
@@ -331,20 +331,19 @@ def _create_pool_metadata(merged_df: pd.DataFrame,
         List of pool metadata dictionaries
     """
     pool_metadata = []
-    final_pool_names = set()
-    
-    # Extract pool names from column names
+    final_pool_ids = set()
+
+    # Extract pool IDs from column names
     for col in merged_df.columns:
         if col.startswith('apy_'):
-            pool_name = col[4:]  # Remove 'apy_' prefix
-            final_pool_names.add(pool_name)
-    
+            pool_id = col[4:]  # Remove 'apy_' prefix
+            final_pool_ids.add(pool_id)
+
     for pool_id, pool_info in pool_data.items():
-        pool_name = pool_info['name']
-        if pool_name in final_pool_names:
+        if pool_id in final_pool_ids:
             pool_metadata.append({
                 'pool_id': pool_id,
-                'name': pool_name,
+                'name': pool_info['name'],
                 'current_tvl': pool_info['current_tvl'],
                 'current_apy': pool_info['current_apy'],
                 'chain': pool_info.get('chain', 'Unknown'),
@@ -352,7 +351,7 @@ def _create_pool_metadata(merged_df: pd.DataFrame,
                 'symbol': pool_info.get('symbol', 'Unknown'),
                 'last_updated': datetime.now().isoformat()
             })
-    
+
     return pool_metadata
 
 
