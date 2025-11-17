@@ -10,6 +10,7 @@ import pandas as pd
 import sqlite3
 import json
 import time
+import os
 from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional, Tuple
 
@@ -216,17 +217,24 @@ def _calculate_weighted_metrics(merged_df: pd.DataFrame) -> pd.DataFrame:
     return merged_df
 
 
-def _save_to_database(merged_df: pd.DataFrame, pool_data: Dict[str, Dict[str, Any]], 
+def _save_to_database(merged_df: pd.DataFrame, pool_data: Dict[str, Dict[str, Any]],
                      db_filename: str) -> None:
     """
     Save merged data and metadata to SQLite database.
-    
+
     Args:
         merged_df: Merged DataFrame to save
         pool_data: Original pool data for metadata
         db_filename: Database filename
     """
     print(f"Saving data to SQLite database: {db_filename}")
+
+    # Create directory if it doesn't exist
+    db_dir = os.path.dirname(db_filename)
+    if db_dir and not os.path.exists(db_dir):
+        os.makedirs(db_dir, exist_ok=True)
+        print(f"Created directory: {db_dir}")
+
     conn = sqlite3.connect(db_filename)
     
     # Ensure we're starting with a clean slate
@@ -251,18 +259,24 @@ def _save_to_database(merged_df: pd.DataFrame, pool_data: Dict[str, Dict[str, An
     print(f"Final dataset contains {len(pool_metadata)} pools with valid data")
 
 
-def _save_to_json(merged_df: pd.DataFrame, pool_data: Dict[str, Dict[str, Any]], 
+def _save_to_json(merged_df: pd.DataFrame, pool_data: Dict[str, Dict[str, Any]],
                   json_filename: str) -> None:
     """
     Save merged data and metadata to JSON file.
-    
+
     Args:
         merged_df: Merged DataFrame to save
         pool_data: Original pool data for metadata
         json_filename: JSON filename
     """
     print(f"Saving data to JSON files...")
-    
+
+    # Create directory if it doesn't exist
+    json_dir = os.path.dirname(DEFAULT_JSON_DATA_FILENAME)
+    if json_dir and not os.path.exists(json_dir):
+        os.makedirs(json_dir, exist_ok=True)
+        print(f"Created directory: {json_dir}")
+
     # Prepare pool_data for JSON export
     pool_data_for_json = {}
     
