@@ -174,6 +174,7 @@
         }
     }
 
+  
     // Create the pool contributions over time stacked area chart
     function createChart(data) {
         try {
@@ -300,7 +301,7 @@
         const config = {
             responsive: true,
             displayModeBar: true,
-            modeBarButtonsToRemove: ['pan2d', 'select2d', 'lasso2d', 'autoScale2d', 'resetScale2d'],
+            modeBarButtonsToRemove: ['pan2d', 'select2d', 'lasso2d'],
             displaylogo: false,
             toImageButtonOptions: {
                 format: 'png',
