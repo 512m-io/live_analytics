@@ -65,6 +65,7 @@
         }
     }
 
+  
     // Create the interactive chart with exact matplotlib styling
     function createChart(data) {
         if (!data || data.length === 0) {
@@ -178,7 +179,7 @@
         const config = {
             responsive: true,
             displayModeBar: true,
-            modeBarButtonsToRemove: ['pan2d', 'select2d', 'lasso2d', 'autoScale2d', 'resetScale2d'],
+            modeBarButtonsToRemove: ['pan2d', 'select2d', 'lasso2d'],
             displaylogo: false,
             toImageButtonOptions: {
                 format: 'png',
