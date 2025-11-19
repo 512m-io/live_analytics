@@ -1,223 +1,187 @@
-# DeFi Prime Rate Analysis
+# Stablecoin Prime Rate Analytics
 
-A comprehensive Python project for analyzing DeFi stablecoin yields and calculating a weighted "Prime Rate" for the DeFi ecosystem.
+Python utilities, JSON exports, and embeddable Plotly widgets that power the Stablecoin Prime Rate section of [512m.io/analytics](https://512m.io/analytics). The tooling ingests the top TVL-weighted stablecoin pools from DeFiLlama, computes the Stablecoin Prime Rate (SPR), publishes the data to GitHub Pages, and keeps downstream consumers (Squarespace embeds + Telegram alerts) in sync.
+
+---
 
 ## Overview
 
-This project fetches data from DeFiLlama and other sources to:
-- Calculate a weighted DeFi Prime Rate based on top stablecoin pools by TVL
-- Analyze correlations between individual pools and the overall rate
-- Compare DeFi yields with traditional market indicators
-- Generate academic-style visualizations for research and analysis
+- Fetch the top stablecoin pools via the DeFiLlama yields API and calculate a TVL-weighted prime rate (`scripts/spr_fetcher_v1.py`).
+- Store clean history in both SQLite (`data/defi_prime_rate.db`) and JSON (`data/pool_data.json`, `data/pool_metadata.json`) for publishing.
+- Serve drop-in Plotly widgets (`scripts/plotly_spr.js`, `scripts/plotly_pool_contributions.js`) that hydrate Squarespace with the hosted JSON.
+- Ship opt-in Telegram notifications (`notifications/telegram_bot.py`) summarizing the daily SPR move.
 
-## Project Structure
+The repo is optimized for GitHub Pages hosting: committing the refreshed `data/` artifacts automatically updates the live experience embedded on https://512m-io.github.io/live_analytics (and, by extension, https://512m.io/analytics).
 
-### Core Modules
+---
 
-- **`config.py`** - Centralized configuration with constants, API endpoints, and plotting styles
-- **`utils.py`** - Common utility functions for data fetching, database operations, and plotting
-- **`spr_fetcher_v1.py`** - Main data fetcher that calculates the DeFi Prime Rate
-- **`spr_plotter.py`** - Visualization module for Prime Rate analysis
-- **`specific_pools_fetcher.py`** - Fetcher for specific pool analysis
-- **`spr_pool_identifier.py`** - Pool data extraction and identification utility
-- **`yo_corr.py`** - yoUSD correlation analysis with the Prime Rate
-- **`corr_analysis.py`** - Market correlation analysis (BTC, ETH, SPY)
-- **`spr_db_csv.py`** - Database export utilities
-- **`spr_test.py`** - Testing module for correlation calculations
+## Architecture at a Glance
 
-### Data Files
+1. **Ingestion & Processing**  
+   `scripts/spr_fetcher_v1.py` purges the local DB, downloads pool-level chart data, merges it into a uniform index, and computes `weighted_apy` plus a 14-day moving average.
 
-- **`data/defi_prime_rate.db`** - SQLite database containing historical pool data
-- **`512m_logo.png`** - Logo for plot overlays
-- **`.env`** - Environment variables (not included, see setup)
+2. **Data Products**  
+   - SQLite tables (`pool_data`, `pool_metadata`) for internal analysis.  
+   - JSON exports designed for static hosting (`pool_data.json`, `pool_metadata.json`) with embedded metadata about export timeframes.
 
-### Visualization Scripts
+3. **Front-End Delivery**  
+   `scripts/plotly_spr.js` and `scripts/plotly_pool_contributions.js` fetch the JSON directly from GitHub Pages, render Plotly charts in Squarespace, and hydrate statistics blocks beneath each chart. Lightweight HTML wrappers live in `pages/` for quick manual previews.
 
-- **`scripts/plotly_charts.js`** - Main Plotly visualization script for DeFi Prime Rate analysis
-- **`scripts/plotly_common.js`** - Common utilities and configurations for Plotly charts
-- **`scripts/spr_charts.js`** - Specific Prime Rate visualization components
-- **`scripts/yo_corr_charts.js`** - yoUSD correlation analysis visualizations
-- **`scripts/corr_analysis_charts.js`** - Market correlation analysis charts
-- **`scripts/specific_pools_charts.js`** - Specific pool comparison visualizations
+4. **Notifications**  
+   `notifications/telegram_bot.py` reads the JSON locally (or from a downstream clone), computes day-over-day deltas, and posts formatted updates through Telegram Bot API credentials.
+
+5. **Static Assets & Screenshots**  
+   `public/512m_logo.png` is used as a watermark inside Plotly charts, and `charts/` stores the latest PNG exports for documentation or social sharing.
+
+---
+
+## Repository Layout
+
+| Path | Purpose |
+|------|---------|
+| `scripts/` | Core Python + JS utilities: config, helpers, data fetcher, and Plotly embeds. |
+| `data/` | Generated artifacts (SQLite DB + JSON) consumed by GitHub Pages and automations. |
+| `pages/` | Minimal HTML stubs that load the Plotly bundles for local preview/testing. |
+| `public/` | Static assets (currently the 512M watermark). |
+| `charts/` | Snapshot PNG charts generated from the analytics pipeline. |
+| `notifications/` | Telegram bot for daily Stablecoin Prime Rate digests. |
+| `requirements.txt` | Python dependencies for the data pipeline. |
+
+---
 
 ## Setup
 
 ### Prerequisites
 
-- Python 3.8+
-- Polygon.io API key (for Ethereum price data)
+- Python 3.10+
+- A GitHub Pages branch (or any static host) for serving `data/*.json` and the `scripts/*.js` bundles.
+- (Optional) Telegram Bot API token and chat ID for notifications.
 
 ### Installation
 
-1. Clone the repository
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
 
-3. Create a `.env` file with your API key:
-   ```
-   POLYGON_API_KEY=your_polygon_api_key_here
-   ```
+Environment variables (`.env` is supported when available):
 
-### Dependencies
+```
+TELEGRAM_BOT_TOKEN=xxxxxxxxxxxxxxxxxxxx
+TELEGRAM_CHAT_ID=123456789
+```
 
-- `requests` - API calls
-- `pandas` - Data manipulation
-- `matplotlib` - Plotting and visualization
-- `numpy` - Numerical computations
-- `python-dotenv` - Environment variable management
-- `Pillow` - Image processing for logo overlays
-- `seaborn` - Enhanced plotting styles
+The fetcher only requires public APIs today, so no Polygon/Coingecko keys are necessary unless you extend the pipeline.
+
+---
 
 ## Usage
 
-### 1. Fetch DeFi Prime Rate Data
+### 1. Refresh the Stablecoin Prime Rate dataset
 
 ```bash
-python spr_fetcher_v1.py
+python scripts/spr_fetcher_v1.py
 ```
 
-This will:
-- Fetch top 100 stablecoin pools by TVL from DeFiLlama
-- Calculate weighted average APY (the "DeFi Prime Rate")
-- Save data to SQLite database
-- Display summary statistics
+What happens:
 
-### 2. Create Prime Rate Visualizations
+- Purges `data/defi_prime_rate.db`.
+- Pulls ~360 days of history for the top 100 stablecoin pools (filters non-stable, 0% APY, and Merkl pools).
+- Merges APY + TVL data, computes `weighted_apy` and `ma_apy_14d`.
+- Saves the normalized dataset to SQLite and JSON, writing helpful export metadata along the way.
+- Prints summary stats (pool counts, date ranges, latest SPR, etc.).
+
+Commit and push the updated `data/` folder to refresh https://512m-io.github.io/live_analytics and, consequently, the live Squarespace embeds.
+
+### 2. Preview the interactive charts locally
 
 ```bash
-python spr_plotter.py
+# From repo root
+python -m http.server 8000
+# Navigate to http://localhost:8000/pages/spr.html
 ```
 
-Generates:
-- Daily vs 14-day moving average trends
-- Pool contribution analysis
-- Time-series contribution charts
+Both HTML files simply load the self-contained Plotly bundles from `scripts/`. Update `CONFIG.dataUrl` / `metadataUrl` in each JS file if you host the JSON elsewhere.
 
-### 3. Analyze Specific Pools
+### 3. Send the Telegram digest (optional)
 
 ```bash
-python specific_pools_fetcher.py
+python notifications/telegram_bot.py
 ```
 
-Creates visualizations comparing:
-- USDC and USDT pool APY trends
-- Ethereum price movements
+The bot:
 
-### 4. yoUSD Correlation Analysis
+- Reads the latest JSON exports from `data/`.
+- Computes daily changes in `weighted_apy` and `ma_apy_14d`.
+- Posts a formatted HTML message (with emojis and direct links to `512m.io/analytics`) into the configured chat.  
+Schedule it via cron/GitHub Actions once satisfied locally.
 
-```bash
-python yo_corr.py
-```
-
-Performs comprehensive analysis of yoUSD vs DeFi Prime Rate:
-- Time series comparison
-- Rolling correlation and beta
-- Scatter plot with trend analysis
-
-### 5. Market Correlation Analysis
-
-```bash
-python corr_analysis.py
-```
-
-Analyzes correlations between:
-- Bitcoin vs S&P 500
-- Ethereum vs S&P 500  
-- Ethereum vs Bitcoin
-
-### 6. Export Data to CSV
-
-```bash
-python spr_db_csv.py
-```
-
-Exports specific pool data to CSV format for external analysis.
-
-### 7. Pool Data Identification
-
-```bash
-python spr_pool_identifier.py
-```
-
-Extracts and displays the latest APY and TVL data for pools 0-15 from the database with summary statistics.
-
-### 8. Run Tests
-
-```bash
-python spr_test.py
-```
-
-Runs correlation calculation tests with both synthetic and real market data.
-
-## Key Features
-
-### Data Sources
-- **DeFiLlama**: Pool APY and TVL data
-- **Polygon.io**: Ethereum and traditional market price data
-
-### Analysis Capabilities
-- Weighted average APY calculation based on TVL
-- Rolling correlation and beta analysis
-- Multi-asset correlation matrices
-- Time-series contribution analysis
-
-### Visualization Features
-- Academic-style plots with serif fonts
-- Consistent color theming
-- Logo overlays on all charts
-- Multiple chart types (line, scatter, heatmap, stacked area)
+---
 
 ## Configuration
 
-### Customizing Analysis Parameters
+Centralized in `scripts/config.py`:
 
-Edit `config.py` to modify:
-- Pool selection criteria
-- Rolling window sizes
-- Plotting themes and colors
-- API endpoints
+- `API_ENDPOINTS` – DeFiLlama + CoinGecko URLs.  
+- `DEFAULT_FETCH_DAYS`, `RATE_LIMIT_DELAY`, `ROLLING_WINDOW_SIZES` – control ingestion scope and smoothing windows.  
+- `SPECIFIC_POOL_IDS`, `POOL_NAMES`, `DISPLAY_POOL_NAMES` – quick mappings for featured pools in downstream charts.  
+- `DEFAULT_LOGO_PATH` / alpha – watermark settings used by the Plotly bundles.
 
-### Adding New Pools
+Adjusting these constants keeps the rest of the pipeline untouched.
 
-To analyze additional pools:
-1. Add pool IDs to `SPECIFIC_POOL_IDS` in `config.py`
-2. Update `POOL_NAMES` mapping
-3. Add display names to `DISPLAY_POOL_NAMES` if needed
+---
 
-## Database Schema
+## Data Schema
 
-### `pool_data` Table
-- `date` (index) - Date of observation
-- `apy_Pool_N` - APY for pool N
-- `tvlUsd_Pool_N` - TVL in USD for pool N  
-- `weighted_apy` - Calculated weighted average APY
-- `ma_apy_14d` - 14-day moving average APY
+### SQLite (`data/defi_prime_rate.db`)
 
-### `pool_metadata` Table
-- `pool_id` - DeFiLlama pool identifier
-- `name` - Pool name
-- `current_tvl` - Current TVL in USD
-- `current_apy` - Current APY percentage
-- `last_updated` - Timestamp of last update
+- `pool_data`  
+  - Indexed by `date`.  
+  - Contains paired columns `apy_<pool_id>` and `tvlUsd_<pool_id>` for every pool retained after cleaning.  
+  - Includes computed columns `weighted_apy` and `ma_apy_14d`.
 
-## Contributing
+- `pool_metadata`  
+  - `pool_id`, `name`, `current_tvl`, `current_apy`, `chain`, `project`, `symbol`, `last_updated`.
 
-When adding new features:
-1. Use the existing `config.py` for constants
-2. Add reusable functions to `utils.py`
-3. Follow the established type hinting patterns
-4. Include comprehensive error handling
-5. Add appropriate docstrings
+### JSON Exports
 
-## Notes
+- `pool_data.json`  
+  ```
+  {
+    "pool_data": {
+      "2024-05-01": {
+        "apy_<pool_id>": 12.3,
+        "tvlUsd_<pool_id>": 1.2e8,
+        "weighted_apy": 9.87,
+        "ma_apy_14d": 9.54,
+        …
+      },
+      …
+    },
+    "export_info": {
+      "export_timestamp": "...",
+      "date_range": { "start": "...", "end": "..." },
+      "total_data_points": 360
+    }
+  }
+  ```
 
-- The project uses academic-style plotting with serif fonts and muted colors
-- All timestamps are normalized to handle timezone differences
-- Rate limiting is implemented for API calls
-- The database is purged and refreshed on each run to ensure data freshness
+- `pool_metadata.json` mirrors the SQLite metadata and adds its own `export_info`.
+
+These schemas are consumed verbatim by the hosted Plotly charts, so keep backward compatibility in mind when making changes.
+
+---
+
+## Extending the System
+
+- **Add/remove pools:** tweak the filters inside `fetch_top_stablecoin_pools_by_tvl` or seed `SPECIFIC_POOL_IDS` for guaranteed coverage.  
+- **Change smoothing windows:** edit `ROLLING_WINDOW_SIZES` in `config.py`.  
+- **New embeds:** clone an existing Plotly bundle, update the copy’s `CONFIG` URLs, and drop it into a new Squarespace block.  
+- **More alerts:** reuse `notifications/telegram_bot.py` as a template for Slack/email handlers.
+
+---
 
 ## License
 
-This project is for research and educational purposes.
+Research & educational use only. See repository history for attribution and updates.
