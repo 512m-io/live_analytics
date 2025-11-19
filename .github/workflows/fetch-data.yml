@@ -10,23 +10,23 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-    
+
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.9'
-    
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    
+
     - name: Ensure data directory exists
       run: |
         mkdir -p data
@@ -36,65 +36,19 @@ jobs:
         POLYGON_API_KEY: ${{ secrets.POLYGON_API_KEY }}
       run: |
         python scripts/spr_fetcher_v1.py
-    
+
     - name: Configure git
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-    
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
 
-    - name: Generate Chart Images
+    - name: Commit and push data files
       run: |
-        npm install puppeteer
-        node -e "
-        const puppeteer = require('puppeteer');
-        const fs = require('fs');
-        const path = require('path');
-
-        (async () => {
-          const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
-          const page = await browser.newPage();
-
-          // Set download path
-          const downloadPath = './charts';
-          if (!fs.existsSync(downloadPath)) fs.mkdirSync(downloadPath);
-
-          const client = await page.createCDPSession();
-          await client.send('Page.setDownloadBehavior', {
-            behavior: 'allow',
-            downloadPath: path.resolve(downloadPath)
-          });
-
-          // Generate SPR chart
-          console.log('Generating SPR chart...');
-          await page.goto('https://512m-io.github.io/live_analytics/pages/spr.html', {waitUntil: 'networkidle0'});
-          await page.waitForSelector('#defi-chart', {timeout: 10000});
-          await page.click('.modebar-btn[data-title*=\"Download plot\"]');
-          await new Promise(resolve => setTimeout(resolve, 3000));
-
-          // Generate pool contributions chart
-          console.log('Generating pool contributions chart...');
-          await page.goto('https://512m-io.github.io/live_analytics/pages/pool_contributions.html', {waitUntil: 'networkidle0'});
-          await page.waitForSelector('#pool-contributions-chart', {timeout: 10000});
-          await page.click('.modebar-btn[data-title*=\"Download plot\"]');
-          await new Promise(resolve => setTimeout(resolve, 3000));
-
-          await browser.close();
-          console.log('Charts generated successfully!');
-        })();
-        "
-
-    - name: Commit and push data and chart files
-      run: |
-        git add data/pool_data.json data/pool_metadata.json data/defi_prime_rate.db charts/*.png
+        git add data/pool_data.json data/pool_metadata.json data/defi_prime_rate.db
         if git diff --staged --quiet; then
           echo "No changes to commit"
         else
-          git commit -m "Update DeFi data and charts - $(date)"
+          git commit -m "Update DeFi data - $(date)"
           git pull --rebase
           git push
         fi
