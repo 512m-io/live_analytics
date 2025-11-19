@@ -8,49 +8,17 @@ to eliminate code duplication and improve maintainability.
 import sqlite3
 import requests
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from datetime import datetime, timedelta
 from typing import Optional, Dict, Any, Tuple
 import time
 import os
-from matplotlib.offsetbox import OffsetImage, AnnotationBbox
-from PIL import Image
 
 from config import (
-    API_ENDPOINTS, DEFAULT_DB_FILENAME, DEFAULT_LOGO_PATH, DEFAULT_LOGO_ALPHA,
-    RATE_LIMIT_DELAY, RATE_LIMIT_RETRY_DELAY, COINGECKO_FREE_TIER_DELAY, THEME_PALETTE
+    API_ENDPOINTS, DEFAULT_DB_FILENAME,
+    RATE_LIMIT_DELAY, RATE_LIMIT_RETRY_DELAY, COINGECKO_FREE_TIER_DELAY
 )
-
-
-def add_logo_overlay(ax: plt.Axes, logo_path: str = DEFAULT_LOGO_PATH, 
-                    alpha: float = DEFAULT_LOGO_ALPHA) -> None:
-    """
-    Add logo overlay to the center of a matplotlib plot.
-    
-    Args:
-        ax: matplotlib axis object
-        logo_path: path to logo image file
-        alpha: transparency level (0-1)
-    """
-    try:
-        logo_img = Image.open(logo_path)
-        logo_array = np.array(logo_img)
-        
-        x_center = (ax.get_xlim()[0] + ax.get_xlim()[1]) / 2
-        y_center = (ax.get_ylim()[0] + ax.get_ylim()[1]) / 2
-        
-        plot_width = ax.get_xlim()[1] - ax.get_xlim()[0]
-        logo_width = plot_width * 0.25
-        
-        im = OffsetImage(logo_array, zoom=logo_width/logo_img.width, alpha=alpha)
-        ab = AnnotationBbox(im, (x_center, y_center), frameon=False)
-        ax.add_artist(ab)
-        
-    except Exception as e:
-        print(f"Warning: Could not add logo overlay: {e}")
-
 
 def fetch_pool_chart_data(pool_id: str, pool_name: str = None, 
                          days: int = 360) -> Optional[pd.DataFrame]:
@@ -139,58 +107,6 @@ def _process_timestamp_column(df: pd.DataFrame, pool_name: str) -> Optional[pd.D
     return df
 
 
-def fetch_polygon_data(symbol: str, start_date: str, end_date: str, api_key: str) -> Optional[pd.DataFrame]:
-    """
-    Fetch data from Polygon.io API for a specific symbol.
-    
-    Args:
-        symbol: Asset symbol (e.g., 'BTC', 'ETH', 'SPY')
-        start_date: Start date in YYYY-MM-DD format
-        end_date: End date in YYYY-MM-DD format
-        api_key: Polygon API key
-        
-    Returns:
-        DataFrame with price data, or None if failed
-    """
-    base_url = API_ENDPOINTS['polygon_base']
-    
-    # Determine if the symbol is a crypto or stock ticker
-    if symbol.upper() in ['BTC', 'ETH']:
-        url = f"{base_url}/v2/aggs/ticker/X:{symbol.upper()}USD/range/1/day/{start_date}/{end_date}"
-    else:
-        url = f"{base_url}/v2/aggs/ticker/{symbol.upper()}/range/1/day/{start_date}/{end_date}"
-    
-    params = {
-        'apiKey': api_key,
-        'adjusted': 'true',
-        'sort': 'asc'
-    }
-    
-    try:
-        print(f"Fetching data for {symbol}...")
-        response = requests.get(url, params=params)
-        response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
-        
-        data = response.json()
-        
-        if data.get('results'):
-            df = pd.DataFrame(data['results'])
-            df['date'] = pd.to_datetime(df['t'], unit='ms')
-            df = df[['date', 'c']].rename(columns={'c': 'close'})
-            df.set_index('date', inplace=True)
-            
-            print(f"Successfully fetched {len(df)} data points for {symbol}")
-            return df
-        else:
-            print(f"No data returned for {symbol}")
-            return None
-            
-    except requests.exceptions.RequestException as e:
-        print(f"Error fetching {symbol}: {e}")
-        return None
-
-
-
 def load_data_from_db(db_filename: str = DEFAULT_DB_FILENAME) -> Tuple[Optional[pd.DataFrame], Optional[pd.DataFrame]]:
     """
     Load data from SQLite database.
@@ -263,58 +179,6 @@ def format_date_axis(ax: plt.Axes, interval: int = 2) -> None:
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
     ax.xaxis.set_major_locator(mdates.WeekdayLocator(interval=interval))
     plt.setp(ax.xaxis.get_majorticklabels(), rotation=45, ha='right')
-
-
-def calculate_rolling_correlation(series1: pd.Series, series2: pd.Series, 
-                                window: int = 30, min_periods: int = 15) -> pd.Series:
-    """
-    Calculate rolling correlation between two pandas Series.
-    
-    Args:
-        series1: First time series
-        series2: Second time series  
-        window: Rolling window size
-        min_periods: Minimum periods required for calculation
-        
-    Returns:
-        Series with rolling correlation values
-    """
-    return series1.rolling(window=window, min_periods=min_periods).corr(series2)
-
-
-def calculate_rolling_beta(dependent_series: pd.Series, independent_series: pd.Series,
-                          window: int = 30, min_periods: int = 15) -> pd.Series:
-    """
-    Calculate rolling beta between two series using returns.
-    
-    Args:
-        dependent_series: Dependent variable series
-        independent_series: Independent variable series
-        window: Rolling window size
-        min_periods: Minimum periods required for calculation
-        
-    Returns:
-        Series with rolling beta values
-    """
-    # Calculate returns
-    dep_returns = dependent_series.pct_change().dropna()
-    indep_returns = independent_series.pct_change().dropna()
-    
-    # Align the series
-    aligned_dep, aligned_indep = dep_returns.align(indep_returns, join='inner')
-    
-    # Rolling covariance
-    rolling_cov = aligned_dep.rolling(window=window, min_periods=min_periods).cov(aligned_indep)
-    
-    # Rolling variance of the independent series
-    rolling_var = aligned_indep.rolling(window=window, min_periods=min_periods).var()
-    
-    # Calculate beta
-    beta = rolling_cov / rolling_var
-    
-    return beta
-
-
 
 def purge_database(db_filename: str = DEFAULT_DB_FILENAME) -> None:
     """
@@ -415,90 +279,12 @@ def validate_dataframe(df: pd.DataFrame, required_columns: list = None) -> bool:
     
     return True
 
-
-def normalize_datetime_index(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Normalize datetime index to remove time component and ensure consistency.
-    
-    Args:
-        df: DataFrame with datetime index
-        
-    Returns:
-        DataFrame with normalized datetime index
-    """
-    df_copy = df.copy()
-    
-    if not isinstance(df_copy.index, pd.DatetimeIndex):
-        df_copy.index = pd.to_datetime(df_copy.index)
-    
-    df_copy.index = df_copy.index.normalize()
-    
-    if df_copy.index.tz is not None:
-        df_copy.index = df_copy.index.tz_localize(None)
-    
-    return df_copy
-
-
-def print_data_summary(df: pd.DataFrame, name: str = "Dataset") -> None:
-    """
-    Print a standardized summary of DataFrame contents.
-    
-    Args:
-        df: DataFrame to summarize
-        name: Name for the dataset in output
-    """
-    print(f"\n=== {name} Summary ===")
-    print(f"Shape: {df.shape}")
-    print(f"Date range: {df.index.min()} to {df.index.max()}")
-    print(f"Columns: {list(df.columns)}")
-    
-    missing_data = df.isnull().sum()
-    if missing_data.any():
-        print("Missing values:")
-        for col, count in missing_data.items():
-            if count > 0:
-                print(f"  {col}: {count} ({count/len(df)*100:.1f}%)")
-
-
-
-
-
-def create_subplot_grid(nrows: int, ncols: int, figsize: Tuple[int, int] = (16, 12)) -> Tuple[plt.Figure, np.ndarray]:
-    """
-    Create a standardized subplot grid with consistent styling.
-    
-    Args:
-        nrows: Number of subplot rows
-        ncols: Number of subplot columns  
-        figsize: Figure size tuple
-        
-    Returns:
-        Tuple of (figure, axes_array)
-    """
-    fig, axes = plt.subplots(nrows, ncols, figsize=figsize)
-    
-    if nrows * ncols == 1:
-        axes = np.array([axes])
-    elif nrows == 1 or ncols == 1:
-        axes = np.array(axes)
-    
-    return fig, axes
-
-
 # Export commonly used functions
 __all__ = [
-    'add_logo_overlay',
     'fetch_pool_chart_data', 
-    'fetch_ethereum_price_data',
-    'fetch_polygon_data',
     'load_data_from_db',
     'format_date_axis',
-    'calculate_rolling_correlation',
-    'calculate_rolling_beta',
     'purge_database',
     'safe_api_request',
     'validate_dataframe',
-    'normalize_datetime_index',
-    'print_data_summary',
-    'create_subplot_grid'
 ]
