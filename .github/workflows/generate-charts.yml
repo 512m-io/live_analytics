@@ -1,0 +1,112 @@
+name: Generate Chart Images
+
+on:
+  workflow_run:
+    workflows: ["Fetch DeFi Data"]
+    types:
+      - completed
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  generate-charts:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: |
+        npm install puppeteer
+
+    - name: Ensure charts directory exists
+      run: |
+        mkdir -p charts
+
+    - name: Generate Chart Images
+      run: |
+        node -e "
+        const puppeteer = require('puppeteer');
+        const fs = require('fs');
+        const path = require('path');
+
+        (async () => {
+          const browser = await puppeteer.launch({
+            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            headless: 'new'
+          });
+          const page = await browser.newPage();
+
+          // Set download path
+          const downloadPath = './charts';
+          if (!fs.existsSync(downloadPath)) fs.mkdirSync(downloadPath);
+
+          const client = await page.createCDPSession();
+          await client.send('Page.setDownloadBehavior', {
+            behavior: 'allow',
+            downloadPath: path.resolve(downloadPath)
+          });
+
+          try {
+            // Generate SPR chart
+            console.log('Generating SPR chart...');
+            await page.goto('https://512m-io.github.io/live_analytics/pages/spr.html', {waitUntil: 'networkidle0'});
+            await page.waitForSelector('#defi-chart', {timeout: 10000});
+            await page.click('.modebar-btn[data-title*=\"Download plot\"]');
+            await new Promise(resolve => setTimeout(resolve, 3000));
+
+            // Generate pool contributions chart
+            console.log('Generating pool contributions chart...');
+            await page.goto('https://512m-io.github.io/live_analytics/pages/pool_contributions.html', {waitUntil: 'networkidle0'});
+            await page.waitForSelector('#pool-contributions-chart', {timeout: 10000});
+            await page.click('.modebar-btn[data-title*=\"Download plot\"]');
+            await new Promise(resolve => setTimeout(resolve, 3000));
+
+            // Generate protocol contributions pie chart
+            console.log('Generating protocol contributions pie chart...');
+            await page.goto('https://512m-io.github.io/live_analytics/pages/protocol_contributions.html', {waitUntil: 'networkidle0'});
+            await page.waitForSelector('#protocol-contributions-chart', {timeout: 10000});
+            await page.click('.modebar-btn[data-title*=\"Download plot\"]');
+            await new Promise(resolve => setTimeout(resolve, 3000));
+
+            // Generate chain contributions pie chart
+            console.log('Generating chain contributions pie chart...');
+            await page.goto('https://512m-io.github.io/live_analytics/pages/chain_contributions.html', {waitUntil: 'networkidle0'});
+            await page.waitForSelector('#chain-contributions-chart', {timeout: 10000});
+            await page.click('.modebar-btn[data-title*=\"Download plot\"]');
+            await new Promise(resolve => setTimeout(resolve, 3000));
+
+            console.log('All charts generated successfully!');
+          } catch (error) {
+            console.error('Error generating charts:', error);
+            process.exit(1);
+          }
+
+          await browser.close();
+        })();
+        "
+
+    - name: Configure git
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+
+    - name: Commit and push chart files
+      run: |
+        git add charts/*.png
+        if git diff --staged --quiet; then
+          echo "No chart changes to commit"
+        else
+          git commit -m "Update chart images - $(date)"
+          git pull --rebase
+          git push
+        fi

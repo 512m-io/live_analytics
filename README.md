@@ -1,44 +1,42 @@
-# DeFi Prime Rate Analysis
+# 512m Analytics
 
-A comprehensive Python project for analyzing DeFi stablecoin yields and calculating a weighted "Prime Rate" for the DeFi ecosystem.
+A comprehensive analytics platform for DeFi data visualization and Prime Rate analysis, featuring automated data fetching and interactive web-based charts.
 
 ## Overview
 
 This project fetches data from DeFiLlama and other sources to:
 - Calculate a weighted DeFi Prime Rate based on top stablecoin pools by TVL
-- Analyze correlations between individual pools and the overall rate
-- Compare DeFi yields with traditional market indicators
-- Generate academic-style visualizations for research and analysis
+- Generate interactive web-based visualizations with Plotly.js
+- Create pie charts showing protocol and blockchain contributions
+- Automate chart generation and image storage via GitHub Actions
+- Provide real-time analytics through a static website
 
 ## Project Structure
 
-### Core Modules
+### Core Data Fetching
 
-- **`config.py`** - Centralized configuration with constants, API endpoints, and plotting styles
-- **`utils.py`** - Common utility functions for data fetching, database operations, and plotting
-- **`spr_fetcher_v1.py`** - Main data fetcher that calculates the DeFi Prime Rate
-- **`spr_plotter.py`** - Visualization module for Prime Rate analysis
-- **`specific_pools_fetcher.py`** - Fetcher for specific pool analysis
-- **`spr_pool_identifier.py`** - Pool data extraction and identification utility
-- **`yo_corr.py`** - yoUSD correlation analysis with the Prime Rate
-- **`corr_analysis.py`** - Market correlation analysis (BTC, ETH, SPY)
-- **`spr_db_csv.py`** - Database export utilities
-- **`spr_test.py`** - Testing module for correlation calculations
+- **`scripts/spr_fetcher_v1.py`** - Main data fetcher that calculates the DeFi Prime Rate
+- **`scripts/config.py`** - Centralized configuration with constants and API endpoints
+- **`scripts/utils.py`** - Common utility functions for data processing
+
+### Interactive Visualization Scripts
+
+- **`scripts/plotly_spr.js`** - Main SPR (Stablecoin Prime Rate) time-series visualization
+- **`scripts/plotly_pool_contributions.js`** - Pool contribution analysis charts
+- **`scripts/plotly_protocol_contributions.js`** - Protocol contribution pie chart
+- **`scripts/plotly_chain_contributions.js`** - Blockchain contribution pie chart
 
 ### Data Files
 
-- **`data/defi_prime_rate.db`** - SQLite database containing historical pool data
-- **`512m_logo.png`** - Logo for plot overlays
-- **`.env`** - Environment variables (not included, see setup)
+- **`data/pool_data.json`** - Historical pool APY and TVL data
+- **`data/pool_metadata.json`** - Pool metadata with current values
+- **`data/defi_prime_rate.db`** - SQLite database with historical data
+- **`charts/`** - Directory for storing generated chart images
 
-### Visualization Scripts
+### GitHub Actions
 
-- **`scripts/plotly_charts.js`** - Main Plotly visualization script for DeFi Prime Rate analysis
-- **`scripts/plotly_common.js`** - Common utilities and configurations for Plotly charts
-- **`scripts/spr_charts.js`** - Specific Prime Rate visualization components
-- **`scripts/yo_corr_charts.js`** - yoUSD correlation analysis visualizations
-- **`scripts/corr_analysis_charts.js`** - Market correlation analysis charts
-- **`scripts/specific_pools_charts.js`** - Specific pool comparison visualizations
+- **`.github/workflows/fetch-data.yml`** - Automated data fetching and chart generation
+- **`.github/workflows/generate-charts.yml`** - Separate action for chart image generation
 
 ## Setup
 
@@ -64,92 +62,37 @@ This project fetches data from DeFiLlama and other sources to:
 
 - `requests` - API calls
 - `pandas` - Data manipulation
-- `matplotlib` - Plotting and visualization
 - `numpy` - Numerical computations
 - `python-dotenv` - Environment variable management
-- `Pillow` - Image processing for logo overlays
-- `seaborn` - Enhanced plotting styles
 
 ## Usage
 
 ### 1. Fetch DeFi Prime Rate Data
 
 ```bash
-python spr_fetcher_v1.py
+python scripts/spr_fetcher_v1.py
 ```
 
 This will:
-- Fetch top 100 stablecoin pools by TVL from DeFiLlama
+- Fetch top stablecoin pools by TVL from DeFiLlama
 - Calculate weighted average APY (the "DeFi Prime Rate")
-- Save data to SQLite database
-- Display summary statistics
+- Save data to JSON and SQLite formats
+- Generate pool metadata with current values
 
-### 2. Create Prime Rate Visualizations
+### 2. Interactive Web Visualizations
 
-```bash
-python spr_plotter.py
-```
+The project provides interactive web-based charts that can be viewed at:
+- **SPR Analysis**: Live Prime Rate time-series data
+- **Pool Contributions**: Individual pool contribution analysis
+- **Protocol Contributions**: Pie chart breakdown by DeFi protocol
+- **Chain Contributions**: Pie chart breakdown by blockchain
 
-Generates:
-- Daily vs 14-day moving average trends
-- Pool contribution analysis
-- Time-series contribution charts
+### 3. Automated Chart Generation
 
-### 3. Analyze Specific Pools
-
-```bash
-python specific_pools_fetcher.py
-```
-
-Creates visualizations comparing:
-- USDC and USDT pool APY trends
-- Ethereum price movements
-
-### 4. yoUSD Correlation Analysis
-
-```bash
-python yo_corr.py
-```
-
-Performs comprehensive analysis of yoUSD vs DeFi Prime Rate:
-- Time series comparison
-- Rolling correlation and beta
-- Scatter plot with trend analysis
-
-### 5. Market Correlation Analysis
-
-```bash
-python corr_analysis.py
-```
-
-Analyzes correlations between:
-- Bitcoin vs S&P 500
-- Ethereum vs S&P 500  
-- Ethereum vs Bitcoin
-
-### 6. Export Data to CSV
-
-```bash
-python spr_db_csv.py
-```
-
-Exports specific pool data to CSV format for external analysis.
-
-### 7. Pool Data Identification
-
-```bash
-python spr_pool_identifier.py
-```
-
-Extracts and displays the latest APY and TVL data for pools 0-15 from the database with summary statistics.
-
-### 8. Run Tests
-
-```bash
-python spr_test.py
-```
-
-Runs correlation calculation tests with both synthetic and real market data.
+Charts are automatically generated via GitHub Actions:
+- **Data Fetching**: Runs every 4 hours to update data
+- **Image Generation**: Creates PNG files of all charts
+- **Commit & Push**: Saves both data and chart images to repository
 
 ## Key Features
 
@@ -157,63 +100,83 @@ Runs correlation calculation tests with both synthetic and real market data.
 - **DeFiLlama**: Pool APY and TVL data
 - **Polygon.io**: Ethereum and traditional market price data
 
-### Analysis Capabilities
-- Weighted average APY calculation based on TVL
-- Rolling correlation and beta analysis
-- Multi-asset correlation matrices
-- Time-series contribution analysis
+### Visualization Types
+- **Time-series charts**: SPR historical trends with moving averages
+- **Contribution analysis**: Pool, protocol, and chain breakdowns
+- **Pie charts**: Interactive protocol and blockchain contributions
+- **Academic styling**: Serif fonts, consistent color theming, logo overlays
 
-### Visualization Features
-- Academic-style plots with serif fonts
-- Consistent color theming
-- Logo overlays on all charts
-- Multiple chart types (line, scatter, heatmap, stacked area)
+### Automation Features
+- **Scheduled updates**: Data refreshes every 4 hours
+- **Chart image generation**: Automatic PNG export
+- **Git integration**: Commits changes with timestamps
+- **Error handling**: Retry logic and graceful failures
+
+## Data Sources
+- **DeFiLlama**: Pool APY and TVL data
+- **Polygon.io**: Ethereum and traditional market price data
 
 ## Configuration
 
 ### Customizing Analysis Parameters
 
-Edit `config.py` to modify:
+Edit `scripts/config.py` to modify:
 - Pool selection criteria
-- Rolling window sizes
-- Plotting themes and colors
 - API endpoints
+- Data processing parameters
 
-### Adding New Pools
+## GitHub Actions
 
-To analyze additional pools:
-1. Add pool IDs to `SPECIFIC_POOL_IDS` in `config.py`
-2. Update `POOL_NAMES` mapping
-3. Add display names to `DISPLAY_POOL_NAMES` if needed
+### Automated Workflow Chain
 
-## Database Schema
+The project uses a two-step automated workflow:
 
-### `pool_data` Table
-- `date` (index) - Date of observation
-- `apy_Pool_N` - APY for pool N
-- `tvlUsd_Pool_N` - TVL in USD for pool N  
-- `weighted_apy` - Calculated weighted average APY
-- `ma_apy_14d` - 14-day moving average APY
+#### 1. Data Fetching Workflow (`.github/workflows/fetch-data.yml`)
+- **Triggers**: Every 4 hours via cron, or manual dispatch
+- **Purpose**: Fetches fresh DeFi data from APIs
+- **Steps**:
+  1. Runs Python scripts to fetch latest pool data
+  2. Updates JSON files and SQLite database
+  3. Commits and pushes data changes
+- **Output**: Fresh data in `data/` directory
 
-### `pool_metadata` Table
-- `pool_id` - DeFiLlama pool identifier
-- `name` - Pool name
-- `current_tvl` - Current TVL in USD
-- `current_apy` - Current APY percentage
-- `last_updated` - Timestamp of last update
+#### 2. Chart Generation Workflow (`.github/workflows/generate-charts.yml`)
+- **Triggers**: Automatically after successful data fetching completion, or manual dispatch
+- **Purpose**: Generates PNG images of all interactive charts
+- **Steps**:
+  1. Sets up Node.js and Puppeteer environment
+  2. Visits live chart pages and downloads PNG versions
+  3. Commits and pushes chart image updates
+- **Output**: Updated chart images in `charts/` directory
+
+### Generated Chart Images
+
+All charts are automatically saved as PNG files in the `charts/` directory:
+- `spr_chart.png` - Main SPR time-series visualization
+- `pool_contributions.png` - Pool contribution analysis
+- `protocol_contributions.png` - Protocol pie chart
+- `chain_contributions.png` - Blockchain pie chart
+
+## Data Format
+
+### JSON Structure
+- `pool_data.json`: Historical time-series data with dates, APYs, and TVL
+- `pool_metadata.json`: Current pool information with names, chains, and projects
+
+### Database
+- `defi_prime_rate.db`: SQLite database with all historical records
 
 ## Contributing
 
 When adding new features:
-1. Use the existing `config.py` for constants
-2. Add reusable functions to `utils.py`
-3. Follow the established type hinting patterns
+1. Use the existing `scripts/config.py` for constants
+2. Add reusable functions to `scripts/utils.py`
+3. Follow the established JavaScript patterns for visualizations
 4. Include comprehensive error handling
-5. Add appropriate docstrings
+5. Test chart generation before committing
 
 ## Notes
 
-- The project uses academic-style plotting with serif fonts and muted colors
 - All timestamps are normalized to handle timezone differences
 - Rate limiting is implemented for API calls
 - The database is purged and refreshed on each run to ensure data freshness
