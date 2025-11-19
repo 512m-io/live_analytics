@@ -21,7 +21,7 @@ from config import (
 )
 from utils import (
     fetch_pool_chart_data, purge_database, safe_api_request,
-    validate_dataframe, print_data_summary
+    validate_dataframe
 )
 
 
