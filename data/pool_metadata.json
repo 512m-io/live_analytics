@@ -3,132 +3,132 @@
     {
       "pool_id": "d8c4eff5-c8a9-46fc-a888-057c4c668e72",
       "name": "Pool_0",
-      "current_tvl": 4628477169,
+      "current_tvl": 4623712012,
       "current_apy": 4,
       "chain": "Ethereum",
       "project": "sky-lending",
       "symbol": "SUSDS",
-      "last_updated": "2026-01-06T02:12:59.739531"
+      "last_updated": "2026-01-06T04:48:05.072436"
     },
     {
       "pool_id": "66985a81-9c51-46ca-9977-42b4fe7bc6df",
       "name": "Pool_1",
-      "current_tvl": 3497512491,
-      "current_apy": 5.08478,
+      "current_tvl": 3498892488,
+      "current_apy": 5.08273,
       "chain": "Ethereum",
       "project": "ethena-usde",
       "symbol": "SUSDE",
-      "last_updated": "2026-01-06T02:12:59.739540"
+      "last_updated": "2026-01-06T04:48:05.072445"
     },
     {
       "pool_id": "43641cf5-a92e-416b-bce9-27113d3c0db6",
       "name": "Pool_2",
-      "current_tvl": 2752336124,
+      "current_tvl": 2761380290,
       "current_apy": 6.47455,
       "chain": "Ethereum",
       "project": "maple",
       "symbol": "USDC",
-      "last_updated": "2026-01-06T02:12:59.739542"
+      "last_updated": "2026-01-06T04:48:05.072448"
     },
     {
       "pool_id": "f981a304-bb6c-45b8-b0c5-fd2f515ad23a",
       "name": "Pool_3",
-      "current_tvl": 1994557660,
-      "current_apy": 2.37173,
+      "current_tvl": 1970332035,
+      "current_apy": 2.39047,
       "chain": "Ethereum",
       "project": "aave-v3",
       "symbol": "USDT",
-      "last_updated": "2026-01-06T02:12:59.739544"
+      "last_updated": "2026-01-06T04:48:05.072450"
     },
     {
       "pool_id": "8edfdf02-cdbb-43f7-bca6-954e5fe56813",
       "name": "Pool_4",
-      "current_tvl": 1492147674,
+      "current_tvl": 1490144612,
       "current_apy": 5.65543,
       "chain": "Ethereum",
       "project": "maple",
       "symbol": "USDT",
-      "last_updated": "2026-01-06T02:12:59.739546"
+      "last_updated": "2026-01-06T04:48:05.072454"
     },
     {
       "pool_id": "aa70268e-4b52-42bf-a116-608b370f9501",
       "name": "Pool_5",
-      "current_tvl": 871004633,
-      "current_apy": 3.21946,
+      "current_tvl": 852647688,
+      "current_apy": 3.24527,
       "chain": "Ethereum",
       "project": "aave-v3",
       "symbol": "USDC",
-      "last_updated": "2026-01-06T02:12:59.739549"
+      "last_updated": "2026-01-06T04:48:05.072458"
     },
     {
       "pool_id": "55b0893b-1dbb-47fd-9912-5e439cd3d511",
       "name": "Pool_6",
-      "current_tvl": 498692463,
-      "current_apy": 3.83992,
+      "current_tvl": 497914855,
+      "current_apy": 3.91176,
       "chain": "Ethereum",
       "project": "usual",
       "symbol": "USD0++",
-      "last_updated": "2026-01-06T02:12:59.739551"
+      "last_updated": "2026-01-06T04:48:05.072461"
     },
     {
       "pool_id": "81ae8812-f04f-4f6e-9d71-ee5778f3a178",
       "name": "Pool_7",
-      "current_tvl": 477499675,
-      "current_apy": 5.40014,
+      "current_tvl": 478723332,
+      "current_apy": 5.40021,
       "chain": "Base",
       "project": "morpho-v1",
       "symbol": "STEAKUSDC",
-      "last_updated": "2026-01-06T02:12:59.739555"
+      "last_updated": "2026-01-06T04:48:05.072463"
     },
     {
       "pool_id": "85fc6934-c94d-4ebe-9c60-66beb363669f",
       "name": "Pool_8",
-      "current_tvl": 396135334,
-      "current_apy": 0.97452,
+      "current_tvl": 396934658,
+      "current_apy": 0.9714,
       "chain": "Ethereum",
       "project": "aave-v3",
       "symbol": "RLUSD",
-      "last_updated": "2026-01-06T02:12:59.739557"
+      "last_updated": "2026-01-06T04:48:05.072467"
     },
     {
       "pool_id": "b55f43a8-f444-4cd8-a3a4-0a4e786ba566",
       "name": "Pool_9",
-      "current_tvl": 387667556,
-      "current_apy": 3.95693,
+      "current_tvl": 387745234,
+      "current_apy": 3.95687,
       "chain": "Ethereum",
       "project": "morpho-v1",
       "symbol": "STEAKUSDC",
-      "last_updated": "2026-01-06T02:12:59.739559"
-    },
-    {
-      "pool_id": "e338c687-a5d8-4abf-bc04-127990811b0a",
-      "name": "Pool_10",
-      "current_tvl": 369832753,
-      "current_apy": 3.49496,
-      "chain": "Plasma",
-      "project": "aave-v3",
-      "symbol": "USDT0",
-      "last_updated": "2026-01-06T02:12:59.739562"
+      "last_updated": "2026-01-06T04:48:05.072470"
     },
     {
       "pool_id": "21e1ac8a-b3aa-4576-9506-0b40137721a0",
-      "name": "Pool_11",
-      "current_tvl": 360994316,
-      "current_apy": 1.36274,
+      "name": "Pool_10",
+      "current_tvl": 364282378,
+      "current_apy": 1.34176,
       "chain": "Ethereum",
       "project": "aave-v3",
       "symbol": "USDE",
-      "last_updated": "2026-01-06T02:12:59.739564"
+      "last_updated": "2026-01-06T04:48:05.072472"
+    },
+    {
+      "pool_id": "e338c687-a5d8-4abf-bc04-127990811b0a",
+      "name": "Pool_11",
+      "current_tvl": 355972368,
+      "current_apy": 3.55079,
+      "chain": "Plasma",
+      "project": "aave-v3",
+      "symbol": "USDT0",
+      "last_updated": "2026-01-06T04:48:05.072474"
     },
     {
       "pool_id": "f179ea6c-3345-432f-b727-9e68e7881105",
       "name": "Pool_12",
-      "current_tvl": 348065673,
-      "current_apy": 4.92926,
+      "current_tvl": 348289037,
+      "current_apy": 4.9261,
       "chain": "Tron",
       "project": "justlend",
       "symbol": "USDD",
-      "last_updated": "2026-01-06T02:12:59.739566"
+      "last_updated": "2026-01-06T04:48:05.072477"
     },
     {
       "pool_id": "aff74ce8-4fe3-462b-af11-542cc16d24b2",
@@ -138,577 +138,577 @@
       "chain": "Ethereum",
       "project": "superstate-uscc",
       "symbol": "USCC",
-      "last_updated": "2026-01-06T02:12:59.739568"
-    },
-    {
-      "pool_id": "eaece65e-ffb2-4631-a95e-7f267cb2f1ba",
-      "name": "Pool_14",
-      "current_tvl": 312980330,
-      "current_apy": 0.61113,
-      "chain": "Solana",
-      "project": "kamino-lend",
-      "symbol": "PYUSD",
-      "last_updated": "2026-01-06T02:12:59.739570"
+      "last_updated": "2026-01-06T04:48:05.072479"
     },
     {
       "pool_id": "0aedb3f6-9298-49de-8bb0-2f611a4df784",
-      "name": "Pool_15",
-      "current_tvl": 312810633,
+      "name": "Pool_14",
+      "current_tvl": 312988441,
       "current_apy": 4.62901,
       "chain": "Ethereum",
       "project": "resolv",
       "symbol": "STUSR",
-      "last_updated": "2026-01-06T02:12:59.739572"
+      "last_updated": "2026-01-06T04:48:05.072481"
+    },
+    {
+      "pool_id": "eaece65e-ffb2-4631-a95e-7f267cb2f1ba",
+      "name": "Pool_15",
+      "current_tvl": 311923156,
+      "current_apy": 0.61248,
+      "chain": "Solana",
+      "project": "kamino-lend",
+      "symbol": "PYUSD",
+      "last_updated": "2026-01-06T04:48:05.072483"
     },
     {
       "pool_id": "4438dabc-7f0c-430b-8136-2722711ae663",
       "name": "Pool_16",
-      "current_tvl": 285589352,
-      "current_apy": 4.15,
+      "current_tvl": 285633045,
+      "current_apy": 4.17,
       "chain": "Ethereum",
       "project": "fluid-lending",
       "symbol": "USDC",
-      "last_updated": "2026-01-06T02:12:59.739574"
+      "last_updated": "2026-01-06T04:48:05.072485"
     },
     {
       "pool_id": "c8a24fee-ec00-4f38-86c0-9f6daebc4225",
       "name": "Pool_17",
-      "current_tvl": 266919250,
+      "current_tvl": 266917979,
       "current_apy": 1.25,
       "chain": "Ethereum",
       "project": "sky-lending",
       "symbol": "DAI",
-      "last_updated": "2026-01-06T02:12:59.739576"
+      "last_updated": "2026-01-06T04:48:05.072487"
     },
     {
       "pool_id": "ff2a68af-030c-4697-b0a1-b62a738eaef0",
       "name": "Pool_18",
-      "current_tvl": 260692544,
-      "current_apy": 5.35405,
+      "current_tvl": 260384976,
+      "current_apy": 5.35504,
       "chain": "Ethereum",
       "project": "aave-v3",
       "symbol": "SGHO",
-      "last_updated": "2026-01-06T02:12:59.739578"
+      "last_updated": "2026-01-06T04:48:05.072490"
     },
     {
       "pool_id": "a5fab52f-73fa-4f44-9c09-9af1eb20996c",
       "name": "Pool_19",
-      "current_tvl": 255416536,
-      "current_apy": 5.40014,
+      "current_tvl": 251237039,
+      "current_apy": 5.40022,
       "chain": "Base",
       "project": "morpho-v1",
       "symbol": "SPARKUSDC",
-      "last_updated": "2026-01-06T02:12:59.739581"
+      "last_updated": "2026-01-06T04:48:05.072492"
+    },
+    {
+      "pool_id": "296651fc-25f6-4434-b8ec-17c2af9808da",
+      "name": "Pool_20",
+      "current_tvl": 243071555,
+      "current_apy": 6.35084,
+      "chain": "Solana",
+      "project": "drift-staked-sol",
+      "symbol": "DSOL",
+      "last_updated": "2026-01-06T04:48:05.072495"
     },
     {
       "pool_id": "e7ac1a5f-f141-4c00-9a5d-2e2c505a800c",
-      "name": "Pool_20",
+      "name": "Pool_21",
       "current_tvl": 241966347,
       "current_apy": 1.34994,
       "chain": "BSC",
       "project": "stables-labs-usdx",
       "symbol": "USDX",
-      "last_updated": "2026-01-06T02:12:59.739584"
-    },
-    {
-      "pool_id": "296651fc-25f6-4434-b8ec-17c2af9808da",
-      "name": "Pool_21",
-      "current_tvl": 241201096,
-      "current_apy": 6.35084,
-      "chain": "Solana",
-      "project": "drift-staked-sol",
-      "symbol": "DSOL",
-      "last_updated": "2026-01-06T02:12:59.739587"
+      "last_updated": "2026-01-06T04:48:05.072498"
     },
     {
       "pool_id": "c5c74dd1-995c-4445-9d84-3e710bad7d52",
       "name": "Pool_22",
-      "current_tvl": 221307600,
+      "current_tvl": 221318225,
       "current_apy": 4,
       "chain": "Ethereum",
       "project": "spark-savings",
       "symbol": "USDC",
-      "last_updated": "2026-01-06T02:12:59.739589"
+      "last_updated": "2026-01-06T04:48:05.072501"
     },
     {
       "pool_id": "d6fec854-4258-495b-95df-e4066214f41d",
       "name": "Pool_23",
-      "current_tvl": 209277093,
-      "current_apy": 1.79388,
+      "current_tvl": 209272742,
+      "current_apy": 1.79636,
       "chain": "BSC",
       "project": "lista-lending",
       "symbol": "USD1",
-      "last_updated": "2026-01-06T02:12:59.739591"
+      "last_updated": "2026-01-06T04:48:05.072503"
     },
     {
       "pool_id": "e0672197-9f3e-4414-bca5-e6b4c90aa469",
       "name": "Pool_24",
-      "current_tvl": 205455743,
-      "current_apy": 5.50913,
+      "current_tvl": 208537706,
+      "current_apy": 5.50851,
       "chain": "Base",
       "project": "morpho-v1",
       "symbol": "GTUSDCP",
-      "last_updated": "2026-01-06T02:12:59.739593"
+      "last_updated": "2026-01-06T04:48:05.072505"
     },
     {
       "pool_id": "e96cbd55-a0a0-446a-89ba-ada6e2991d50",
       "name": "Pool_25",
-      "current_tvl": 198410075,
+      "current_tvl": 198706613,
       "current_apy": 4,
       "chain": "Avalanche",
       "project": "spark-savings",
       "symbol": "USDC",
-      "last_updated": "2026-01-06T02:12:59.739595"
+      "last_updated": "2026-01-06T04:48:05.072507"
     },
     {
       "pool_id": "4e8cc592-c8d5-4824-8155-128ba521e903",
       "name": "Pool_26",
-      "current_tvl": 195797276,
-      "current_apy": 5.47,
+      "current_tvl": 195580367,
+      "current_apy": 5.48,
       "chain": "Ethereum",
       "project": "fluid-lending",
       "symbol": "USDT",
-      "last_updated": "2026-01-06T02:12:59.739597"
+      "last_updated": "2026-01-06T04:48:05.072509"
     },
     {
       "pool_id": "42eaf290-24c3-4ce0-82ab-c1276444871b",
       "name": "Pool_27",
-      "current_tvl": 190464676,
-      "current_apy": 1.12844,
+      "current_tvl": 194344590,
+      "current_apy": 1.10448,
       "chain": "Plasma",
       "project": "aave-v3",
       "symbol": "USDE",
-      "last_updated": "2026-01-06T02:12:59.739601"
+      "last_updated": "2026-01-06T04:48:05.072511"
     },
     {
       "pool_id": "bf6ca887-e357-49ec-8031-0d1a6141c455",
       "name": "Pool_28",
-      "current_tvl": 185601538,
-      "current_apy": 7.55291,
+      "current_tvl": 185588695,
+      "current_apy": 7.02452,
       "chain": "Ethereum",
       "project": "cap",
       "symbol": "STCUSD",
-      "last_updated": "2026-01-06T02:12:59.739603"
+      "last_updated": "2026-01-06T04:48:05.072513"
     },
     {
       "pool_id": "843be062-d836-43ef-9670-c78d6ecb60bf",
       "name": "Pool_29",
-      "current_tvl": 183774660,
-      "current_apy": 3.08273,
+      "current_tvl": 183842703,
+      "current_apy": 3.0822,
       "chain": "Ethereum",
       "project": "strata-tranches",
       "symbol": "SRUSDE",
-      "last_updated": "2026-01-06T02:12:59.739605"
+      "last_updated": "2026-01-06T04:48:05.072516"
     },
     {
       "pool_id": "f643e5c0-c3a8-447c-8245-2553543d3680",
       "name": "Pool_30",
-      "current_tvl": 171277203,
-      "current_apy": 4.52387,
+      "current_tvl": 171231059,
+      "current_apy": 4.47862,
       "chain": "Ethereum",
       "project": "sparklend",
       "symbol": "USDS",
-      "last_updated": "2026-01-06T02:12:59.739607"
+      "last_updated": "2026-01-06T04:48:05.072518"
     },
     {
       "pool_id": "25171c4c-1877-449a-9f88-45a9f153ee31",
       "name": "Pool_31",
-      "current_tvl": 167329975,
+      "current_tvl": 167313402,
       "current_apy": 9e-05,
       "chain": "Ethereum",
       "project": "curve-dex",
       "symbol": "DAI-USDC-USDT",
-      "last_updated": "2026-01-06T02:12:59.739609"
+      "last_updated": "2026-01-06T04:48:05.072520"
     },
     {
       "pool_id": "a5d67f7e-5b51-4a9d-969d-caf051a7f5a4",
       "name": "Pool_32",
-      "current_tvl": 165113409,
+      "current_tvl": 165154687,
       "current_apy": 4,
       "chain": "Ethereum",
       "project": "spark-savings",
       "symbol": "USDT",
-      "last_updated": "2026-01-06T02:12:59.739612"
+      "last_updated": "2026-01-06T04:48:05.072522"
     },
     {
       "pool_id": "d118f505-e75f-4152-bad3-49a2dc7482bf",
       "name": "Pool_33",
-      "current_tvl": 160917094,
+      "current_tvl": 160911594,
       "current_apy": 1.79182,
       "chain": "Ethereum",
       "project": "aave-v3",
       "symbol": "PYUSD",
-      "last_updated": "2026-01-06T02:12:59.739616"
+      "last_updated": "2026-01-06T04:48:05.072525"
     },
     {
       "pool_id": "0f67a08c-3f24-4a4b-963e-541f5a5c0364",
       "name": "Pool_34",
-      "current_tvl": 149876015,
-      "current_apy": 6.1091,
+      "current_tvl": 149646710,
+      "current_apy": 6.10309,
       "chain": "Ethereum",
       "project": "falcon-finance",
       "symbol": "SUSDF",
-      "last_updated": "2026-01-06T02:12:59.739618"
+      "last_updated": "2026-01-06T04:48:05.072529"
     },
     {
       "pool_id": "dac406f6-5600-437e-849d-f03daa383864",
       "name": "Pool_35",
-      "current_tvl": 137060769,
-      "current_apy": 1.61567,
+      "current_tvl": 138027722,
+      "current_apy": 1.60374,
       "chain": "Tron",
       "project": "justlend",
       "symbol": "USDT",
-      "last_updated": "2026-01-06T02:12:59.739620"
+      "last_updated": "2026-01-06T04:48:05.072531"
     },
     {
       "pool_id": "d2141a59-c199-4be7-8d4b-c8223954836b",
       "name": "Pool_36",
-      "current_tvl": 132686854,
-      "current_apy": 2.57145,
+      "current_tvl": 128578488,
+      "current_apy": 2.61419,
       "chain": "Solana",
       "project": "kamino-lend",
       "symbol": "USDC",
-      "last_updated": "2026-01-06T02:12:59.739622"
+      "last_updated": "2026-01-06T04:48:05.072533"
     },
     {
       "pool_id": "a306885c-001e-4479-9ae8-459a56527bc1",
       "name": "Pool_37",
-      "current_tvl": 128339223,
-      "current_apy": 3.97074,
+      "current_tvl": 128328916,
+      "current_apy": 3.97003,
       "chain": "Ethereum",
       "project": "morpho-v1",
       "symbol": "GTUSDC",
-      "last_updated": "2026-01-06T02:12:59.739624"
+      "last_updated": "2026-01-06T04:48:05.072535"
     },
     {
       "pool_id": "15556ff2-3c81-4c6e-aecc-ec8238f3eff3",
       "name": "Pool_38",
-      "current_tvl": 126093673,
-      "current_apy": 5.03808,
+      "current_tvl": 126084249,
+      "current_apy": 5.25732,
       "chain": "Ethereum",
       "project": "morpho-v1",
       "symbol": "GTUSDCF",
-      "last_updated": "2026-01-06T02:12:59.739626"
+      "last_updated": "2026-01-06T04:48:05.072538"
     },
     {
       "pool_id": "36977448-9ad9-43ea-85f2-60ee1b92ecd0",
       "name": "Pool_39",
-      "current_tvl": 125635817,
-      "current_apy": 5.32898,
+      "current_tvl": 125822602,
+      "current_apy": 5.31758,
       "chain": "Ethereum",
       "project": "morpho-v1",
       "symbol": "BBQUSDC",
-      "last_updated": "2026-01-06T02:12:59.739628"
+      "last_updated": "2026-01-06T04:48:05.072540"
     },
     {
       "pool_id": "8fa2e60e-365a-41fc-8d50-fadde5041f94",
       "name": "Pool_40",
-      "current_tvl": 124747809,
-      "current_apy": 6.49686,
+      "current_tvl": 124748757,
+      "current_apy": 6.42191,
       "chain": "Ethereum",
       "project": "infinifi",
       "symbol": "SIUSD",
-      "last_updated": "2026-01-06T02:12:59.739630"
-    },
-    {
-      "pool_id": "7e0661bf-8cf3-45e6-9424-31916d4c7b84",
-      "name": "Pool_41",
-      "current_tvl": 112063374,
-      "current_apy": 3.31398,
-      "chain": "Base",
-      "project": "aave-v3",
-      "symbol": "USDC",
-      "last_updated": "2026-01-06T02:12:59.739632"
+      "last_updated": "2026-01-06T04:48:05.072542"
     },
     {
       "pool_id": "9c2bff87-4f12-470d-bf13-b5b59f495dc5",
-      "name": "Pool_42",
-      "current_tvl": 110660970,
+      "name": "Pool_41",
+      "current_tvl": 110960471,
       "current_apy": 1.56,
       "chain": "Cronos",
       "project": "crypto.com-liquid-staking",
       "symbol": "CDCETH",
-      "last_updated": "2026-01-06T02:12:59.739634"
+      "last_updated": "2026-01-06T04:48:05.072544"
+    },
+    {
+      "pool_id": "7e0661bf-8cf3-45e6-9424-31916d4c7b84",
+      "name": "Pool_42",
+      "current_tvl": 109592460,
+      "current_apy": 3.35618,
+      "chain": "Base",
+      "project": "aave-v3",
+      "symbol": "USDC",
+      "last_updated": "2026-01-06T04:48:05.072547"
     },
     {
       "pool_id": "fa55aa2b-e244-4ce4-ab00-9e96b39df32b",
       "name": "Pool_43",
-      "current_tvl": 107502735,
-      "current_apy": 8.43801,
+      "current_tvl": 107181345,
+      "current_apy": 8.44892,
       "chain": "Ethereum",
       "project": "euler-v2",
       "symbol": "PYUSD",
-      "last_updated": "2026-01-06T02:12:59.739636"
+      "last_updated": "2026-01-06T04:48:05.072550"
     },
     {
       "pool_id": "66bbe7c0-f052-4d63-9d0f-2a47e283d3cd",
       "name": "Pool_44",
-      "current_tvl": 99963982,
+      "current_tvl": 99997089,
       "current_apy": 0.08,
       "chain": "Ethereum",
       "project": "curve-dex",
       "symbol": "PYUSD-USDS",
-      "last_updated": "2026-01-06T02:12:59.739639"
+      "last_updated": "2026-01-06T04:48:05.072552"
     },
     {
       "pool_id": "d646f32f-d5af-4e34-a29f-8ebeea6a8520",
       "name": "Pool_45",
-      "current_tvl": 99514637,
+      "current_tvl": 99516538,
       "current_apy": 5.75405,
       "chain": "Ethereum",
       "project": "reservoir-protocol",
       "symbol": "WSRUSD",
-      "last_updated": "2026-01-06T02:12:59.739641"
+      "last_updated": "2026-01-06T04:48:05.072554"
     },
     {
       "pool_id": "ae3397ed-1f0f-4aa4-ab62-44413ea8cd9e",
       "name": "Pool_46",
-      "current_tvl": 98291789,
-      "current_apy": 8.78905,
+      "current_tvl": 98290288,
+      "current_apy": 8.78919,
       "chain": "Base",
       "project": "avantis",
       "symbol": "USDC",
-      "last_updated": "2026-01-06T02:12:59.739644"
+      "last_updated": "2026-01-06T04:48:05.072557"
     },
     {
       "pool_id": "a61791ea-2886-4428-991c-7181d26a6062",
       "name": "Pool_47",
-      "current_tvl": 98016392,
+      "current_tvl": 98018200,
       "current_apy": 3e-05,
       "chain": "Ethereum",
       "project": "frax",
       "symbol": "FPI-FRAX",
-      "last_updated": "2026-01-06T02:12:59.739647"
-    },
-    {
-      "pool_id": "73e933a7-73b2-43ec-b1e9-d5d1d42ce2de",
-      "name": "Pool_48",
-      "current_tvl": 96871256,
-      "current_apy": 8.36077,
-      "chain": "Ethereum",
-      "project": "euler-v2",
-      "symbol": "RLUSD",
-      "last_updated": "2026-01-06T02:12:59.739649"
+      "last_updated": "2026-01-06T04:48:05.072561"
     },
     {
       "pool_id": "13392973-be6e-4b2f-bce9-4f7dd53d1c3a",
-      "name": "Pool_49",
-      "current_tvl": 96719641,
-      "current_apy": 4.60564,
+      "name": "Pool_48",
+      "current_tvl": 96728365,
+      "current_apy": 4.60483,
       "chain": "Gnosis",
       "project": "sdai",
       "symbol": "SDAI",
-      "last_updated": "2026-01-06T02:12:59.739651"
+      "last_updated": "2026-01-06T04:48:05.072563"
+    },
+    {
+      "pool_id": "73e933a7-73b2-43ec-b1e9-d5d1d42ce2de",
+      "name": "Pool_49",
+      "current_tvl": 96322373,
+      "current_apy": 8.37094,
+      "chain": "Ethereum",
+      "project": "euler-v2",
+      "symbol": "RLUSD",
+      "last_updated": "2026-01-06T04:48:05.072565"
     },
     {
       "pool_id": "ded5a855-23c1-459d-8390-ba2707fac7c5",
       "name": "Pool_50",
-      "current_tvl": 93961488,
-      "current_apy": 2.95441,
+      "current_tvl": 93961461,
+      "current_apy": 3.10922,
       "chain": "Ethereum",
       "project": "morpho-v1",
       "symbol": "STEAKUSDT",
-      "last_updated": "2026-01-06T02:12:59.739653"
+      "last_updated": "2026-01-06T04:48:05.072567"
     },
     {
       "pool_id": "8a3a7995-73b3-4e25-8b5c-82a8841bf720",
       "name": "Pool_51",
-      "current_tvl": 92073802,
-      "current_apy": 4.2099,
+      "current_tvl": 92068708,
+      "current_apy": 4.23013,
       "chain": "Ethereum",
       "project": "curve-dex",
       "symbol": "DOLA-SUSDE",
-      "last_updated": "2026-01-06T02:12:59.739655"
+      "last_updated": "2026-01-06T04:48:05.072570"
     },
     {
       "pool_id": "0f185c65-9d48-48d2-85ab-7728314988e6",
       "name": "Pool_52",
-      "current_tvl": 90162640,
-      "current_apy": 1.03689,
+      "current_tvl": 90163293,
+      "current_apy": 0.97936,
       "chain": "Katana",
       "project": "yearn-finance",
       "symbol": "VBUSDC",
-      "last_updated": "2026-01-06T02:12:59.739658"
+      "last_updated": "2026-01-06T04:48:05.072572"
     },
     {
       "pool_id": "43a38685-aa22-4d99-9c2f-bd34a980de01",
       "name": "Pool_53",
-      "current_tvl": 89873474,
-      "current_apy": 9.53696,
+      "current_tvl": 89848226,
+      "current_apy": 9.5462,
       "chain": "Arbitrum",
       "project": "pendle",
       "symbol": "SUSDAI",
-      "last_updated": "2026-01-06T02:12:59.739660"
+      "last_updated": "2026-01-06T04:48:05.072574"
     },
     {
       "pool_id": "fe5cdef6-e8ca-4b13-b2a2-6d66b97a9ffd",
       "name": "Pool_54",
-      "current_tvl": 89873474,
-      "current_apy": 13.46108,
+      "current_tvl": 89848226,
+      "current_apy": 13.47572,
       "chain": "Arbitrum",
       "project": "pendle",
       "symbol": "SUSDAI",
-      "last_updated": "2026-01-06T02:12:59.739661"
+      "last_updated": "2026-01-06T04:48:05.072576"
     },
     {
       "pool_id": "90a3e412-e3be-47e1-a233-fd3760f4a794",
       "name": "Pool_55",
-      "current_tvl": 89368211,
-      "current_apy": 3.89373,
+      "current_tvl": 89464037,
+      "current_apy": 3.98451,
       "chain": "Ethereum",
       "project": "curve-dex",
       "symbol": "USDT-CRVUSD",
-      "last_updated": "2026-01-06T02:12:59.739663"
+      "last_updated": "2026-01-06T04:48:05.072580"
     },
     {
       "pool_id": "7820bd3c-461a-4811-9f0b-1d39c1503c3f",
       "name": "Pool_56",
-      "current_tvl": 82198866,
-      "current_apy": 5.50927,
+      "current_tvl": 82462478,
+      "current_apy": 5.50907,
       "chain": "Base",
       "project": "morpho-v1",
       "symbol": "STEAKUSDC",
-      "last_updated": "2026-01-06T02:12:59.739665"
+      "last_updated": "2026-01-06T04:48:05.072583"
     },
     {
       "pool_id": "ac545f82-305e-4995-8963-f27fa94924f6",
       "name": "Pool_57",
-      "current_tvl": 80374823,
-      "current_apy": 7.94144,
+      "current_tvl": 80394298,
+      "current_apy": 7.46568,
       "chain": "Arbitrum",
       "project": "pendle",
       "symbol": "USDAI",
-      "last_updated": "2026-01-06T02:12:59.739667"
+      "last_updated": "2026-01-06T04:48:05.072585"
     },
     {
       "pool_id": "1f04d9a8-b6c1-4c1c-8660-c83852644f8a",
       "name": "Pool_58",
-      "current_tvl": 80374823,
-      "current_apy": 1.69587,
+      "current_tvl": 80394298,
+      "current_apy": 1.57932,
       "chain": "Arbitrum",
       "project": "pendle",
       "symbol": "USDAI",
-      "last_updated": "2026-01-06T02:12:59.739669"
+      "last_updated": "2026-01-06T04:48:05.072587"
     },
     {
       "pool_id": "e91e23af-9099-45d9-8ba5-ea5b4638e453",
       "name": "Pool_59",
-      "current_tvl": 78993661,
-      "current_apy": 7.0185,
+      "current_tvl": 78711757,
+      "current_apy": 7.04144,
       "chain": "Ethereum",
       "project": "curve-dex",
       "symbol": "USDC-RLUSD",
-      "last_updated": "2026-01-06T02:12:59.739673"
+      "last_updated": "2026-01-06T04:48:05.072589"
     },
     {
       "pool_id": "85407c01-6f16-4cef-9ef2-1b2bf2556183",
       "name": "Pool_60",
-      "current_tvl": 78614648,
-      "current_apy": 5.19281,
+      "current_tvl": 78610299,
+      "current_apy": 5.20082,
       "chain": "Ethereum",
       "project": "convex-finance",
       "symbol": "DOLA-SUSDE",
-      "last_updated": "2026-01-06T02:12:59.739675"
+      "last_updated": "2026-01-06T04:48:05.072593"
     },
     {
       "pool_id": "995b269a-8409-4c55-b97e-868f443b432e",
       "name": "Pool_61",
-      "current_tvl": 78104662,
+      "current_tvl": 78106607,
       "current_apy": 2.00063,
       "chain": "Ethereum",
       "project": "sparklend",
       "symbol": "PYUSD",
-      "last_updated": "2026-01-06T02:12:59.739676"
+      "last_updated": "2026-01-06T04:48:05.072596"
     },
     {
       "pool_id": "12ca9565-0369-404e-b209-631305e4012a",
       "name": "Pool_62",
-      "current_tvl": 74877436,
-      "current_apy": 1.74394,
+      "current_tvl": 74884742,
+      "current_apy": 1.7659,
       "chain": "Ethereum",
       "project": "curve-dex",
       "symbol": "FRAX-USDE",
-      "last_updated": "2026-01-06T02:12:59.739679"
+      "last_updated": "2026-01-06T04:48:05.072598"
     },
     {
       "pool_id": "5fac4a47-5360-49b7-8b61-66f88a3d939f",
       "name": "Pool_63",
-      "current_tvl": 74750232,
-      "current_apy": 2.50154,
+      "current_tvl": 74757526,
+      "current_apy": 2.51473,
       "chain": "Ethereum",
       "project": "convex-finance",
       "symbol": "FRAX-USDE",
-      "last_updated": "2026-01-06T02:12:59.739681"
+      "last_updated": "2026-01-06T04:48:05.072600"
     },
     {
       "pool_id": "d9fa8e14-0447-4207-9ae8-7810199dfa1f",
       "name": "Pool_64",
-      "current_tvl": 73884981,
-      "current_apy": 2.83896,
+      "current_tvl": 73145118,
+      "current_apy": 2.8598,
       "chain": "Arbitrum",
       "project": "aave-v3",
       "symbol": "USDC",
-      "last_updated": "2026-01-06T02:12:59.739682"
+      "last_updated": "2026-01-06T04:48:05.072602"
     },
     {
       "pool_id": "9f3a6015-5045-4471-ba65-ad3dc7c38269",
       "name": "Pool_65",
-      "current_tvl": 71013543,
-      "current_apy": 3.36537,
+      "current_tvl": 70495092,
+      "current_apy": 3.37808,
       "chain": "BSC",
       "project": "venus-core-pool",
       "symbol": "USDT",
-      "last_updated": "2026-01-06T02:12:59.739685"
+      "last_updated": "2026-01-06T04:48:05.072604"
     },
     {
       "pool_id": "bf0f9782-b1cb-419e-9ec2-e107ae8d71e1",
       "name": "Pool_66",
-      "current_tvl": 67406211,
-      "current_apy": 0.31774,
+      "current_tvl": 67405698,
+      "current_apy": 0.3521,
       "chain": "Ethereum",
       "project": "fluid-dex",
       "symbol": "SUSDE-USDT",
-      "last_updated": "2026-01-06T02:12:59.739687"
+      "last_updated": "2026-01-06T04:48:05.072606"
     },
     {
       "pool_id": "55de30c3-bf9f-4d4e-9e0b-536a8ef5ab35",
       "name": "Pool_67",
-      "current_tvl": 65419465,
-      "current_apy": 1.24981,
+      "current_tvl": 65419837,
+      "current_apy": 1.24982,
       "chain": "Ethereum",
       "project": "frax",
       "symbol": "SFRAX",
-      "last_updated": "2026-01-06T02:12:59.739689"
+      "last_updated": "2026-01-06T04:48:05.072609"
     },
     {
       "pool_id": "4c45cc9e-e1a4-43c9-8a3d-687d96abb07c",
       "name": "Pool_68",
-      "current_tvl": 64260905,
-      "current_apy": 4.15,
+      "current_tvl": 64256647,
+      "current_apy": 4.21,
       "chain": "Arbitrum",
       "project": "fluid-lending",
       "symbol": "USDC",
-      "last_updated": "2026-01-06T02:12:59.739691"
+      "last_updated": "2026-01-06T04:48:05.072611"
     },
     {
       "pool_id": "52d6a1b3-8021-435c-8f3a-b0ac9834cfbc",
       "name": "Pool_69",
-      "current_tvl": 62371817,
-      "current_apy": 0.535,
+      "current_tvl": 62367111,
+      "current_apy": 0.58562,
       "chain": "Ethereum",
       "project": "fluid-dex",
       "symbol": "USDC-USDT",
-      "last_updated": "2026-01-06T02:12:59.739694"
+      "last_updated": "2026-01-06T04:48:05.072613"
     },
     {
       "pool_id": "0ed981dc-b49d-426d-ade5-6014728b1ef9",
       "name": "Pool_70",
-      "current_tvl": 62127702,
+      "current_tvl": 62110964,
       "current_apy": 3.03696,
       "chain": "Ethereum",
       "project": "sparklend",
       "symbol": "USDS",
-      "last_updated": "2026-01-06T02:12:59.739696"
+      "last_updated": "2026-01-06T04:48:05.072615"
     },
     {
       "pool_id": "11e29b13-2042-403a-ab27-d27f23b37c33",
@@ -718,27 +718,27 @@
       "chain": "Tron",
       "project": "stusdt",
       "symbol": "STUSDT",
-      "last_updated": "2026-01-06T02:12:59.739698"
+      "last_updated": "2026-01-06T04:48:05.072618"
     },
     {
       "pool_id": "c13f1940-9965-4eee-b7e8-af785591ceda",
       "name": "Pool_72",
-      "current_tvl": 59172954,
-      "current_apy": 4.46738,
+      "current_tvl": 59241521,
+      "current_apy": 4.39006,
       "chain": "Arbitrum",
       "project": "morpho-v1",
       "symbol": "BBQUSDC",
-      "last_updated": "2026-01-06T02:12:59.739702"
+      "last_updated": "2026-01-06T04:48:05.072620"
     },
     {
       "pool_id": "abd6c9e1-3b52-459a-a31b-9022a4dcf7e2",
       "name": "Pool_73",
-      "current_tvl": 57398887,
+      "current_tvl": 57395712,
       "current_apy": 6.23,
       "chain": "Ethereum",
       "project": "fx-protocol",
       "symbol": "FXUSDSTABILITYPOOLV2.0",
-      "last_updated": "2026-01-06T02:12:59.739704"
+      "last_updated": "2026-01-06T04:48:05.072624"
     },
     {
       "pool_id": "0a1ee708-7f5e-4ebf-962a-2666da92d5e7",
@@ -748,261 +748,261 @@
       "chain": "MultiversX",
       "project": "hatom-lending",
       "symbol": "SEGLD",
-      "last_updated": "2026-01-06T02:12:59.739706"
+      "last_updated": "2026-01-06T04:48:05.072627"
     },
     {
       "pool_id": "4a433427-2a7e-4193-bf83-e15c996915e8",
       "name": "Pool_75",
-      "current_tvl": 54656721,
-      "current_apy": 5.53426,
+      "current_tvl": 54665126,
+      "current_apy": 5.34257,
       "chain": "Arbitrum",
       "project": "morpho-v1",
       "symbol": "BBQUSDC",
-      "last_updated": "2026-01-06T02:12:59.739709"
+      "last_updated": "2026-01-06T04:48:05.072629"
     },
     {
       "pool_id": "9f9b14d8-4eaa-4718-85e9-43ca843f6dc6",
       "name": "Pool_76",
-      "current_tvl": 53289548,
-      "current_apy": 4.17,
+      "current_tvl": 53296025,
+      "current_apy": 4.14,
       "chain": "Arbitrum",
       "project": "fluid-lending",
       "symbol": "USD\u20ae0",
-      "last_updated": "2026-01-06T02:12:59.739711"
-    },
-    {
-      "pool_id": "8fbe28b8-140d-4e37-8804-5d2aba4daded",
-      "name": "Pool_77",
-      "current_tvl": 52937870,
-      "current_apy": 3.80858,
-      "chain": "Ethereum",
-      "project": "sparklend",
-      "symbol": "USDT",
-      "last_updated": "2026-01-06T02:12:59.739714"
+      "last_updated": "2026-01-06T04:48:05.072631"
     },
     {
       "pool_id": "d7c8dc33-235e-4d08-94e9-8b72c2500d0d",
-      "name": "Pool_78",
-      "current_tvl": 52582143,
-      "current_apy": 3.81838,
+      "name": "Pool_77",
+      "current_tvl": 52552090,
+      "current_apy": 3.81739,
       "chain": "Ethereum",
       "project": "morpho-v1",
       "symbol": "VBSHUSDC",
-      "last_updated": "2026-01-06T02:12:59.739716"
+      "last_updated": "2026-01-06T04:48:05.072634"
     },
     {
       "pool_id": "3665ee7e-6c5d-49d9-abb7-c47ab5d9d4ac",
-      "name": "Pool_79",
-      "current_tvl": 52153098,
-      "current_apy": 2.06133,
+      "name": "Pool_78",
+      "current_tvl": 52465329,
+      "current_apy": 2.05168,
       "chain": "Ethereum",
       "project": "aave-v3",
       "symbol": "DAI",
-      "last_updated": "2026-01-06T02:12:59.739718"
+      "last_updated": "2026-01-06T04:48:05.072636"
     },
     {
       "pool_id": "baee0253-eb6e-4a08-a579-a2acd4f034b2",
-      "name": "Pool_80",
-      "current_tvl": 51504091,
-      "current_apy": 1.2626,
+      "name": "Pool_79",
+      "current_tvl": 51503416,
+      "current_apy": 1.26249,
       "chain": "Ethereum",
       "project": "aave-v3",
       "symbol": "USDTB",
-      "last_updated": "2026-01-06T02:12:59.739720"
-    },
-    {
-      "pool_id": "0c3c1b07-7c36-4fbb-8e71-226e02bf15c1",
-      "name": "Pool_81",
-      "current_tvl": 50286043,
-      "current_apy": 0.14881,
-      "chain": "Cronos",
-      "project": "tectonic",
-      "symbol": "USDC",
-      "last_updated": "2026-01-06T02:12:59.739722"
+      "last_updated": "2026-01-06T04:48:05.072638"
     },
     {
       "pool_id": "fdbe85f6-71be-4e9c-9dd3-256b24d22a95",
-      "name": "Pool_82",
-      "current_tvl": 50126959,
-      "current_apy": 0.74719,
+      "name": "Pool_80",
+      "current_tvl": 50120254,
+      "current_apy": 0.7939,
       "chain": "Arbitrum",
       "project": "morpho-v1",
       "symbol": "BBQUSDT0",
-      "last_updated": "2026-01-06T02:12:59.739724"
+      "last_updated": "2026-01-06T04:48:05.072640"
     },
     {
       "pool_id": "940650fd-f695-4178-b438-cc52a7cd59e9",
-      "name": "Pool_83",
-      "current_tvl": 50126944,
-      "current_apy": 1.42477,
+      "name": "Pool_81",
+      "current_tvl": 50120239,
+      "current_apy": 1.49102,
       "chain": "Arbitrum",
       "project": "morpho-v1",
       "symbol": "BBQUSDT0",
-      "last_updated": "2026-01-06T02:12:59.739726"
+      "last_updated": "2026-01-06T04:48:05.072642"
+    },
+    {
+      "pool_id": "0c3c1b07-7c36-4fbb-8e71-226e02bf15c1",
+      "name": "Pool_82",
+      "current_tvl": 50050866,
+      "current_apy": 0.14879,
+      "chain": "Cronos",
+      "project": "tectonic",
+      "symbol": "USDC",
+      "last_updated": "2026-01-06T04:48:05.072644"
     },
     {
       "pool_id": "6f74baf2-48f3-4e4a-ad67-5c056f37e4fa",
-      "name": "Pool_84",
-      "current_tvl": 50039420,
-      "current_apy": 0.8,
+      "name": "Pool_83",
+      "current_tvl": 50039327,
+      "current_apy": 1.36,
       "chain": "Ethereum",
       "project": "curve-dex",
       "symbol": "SUSDS-USDT",
-      "last_updated": "2026-01-06T02:12:59.739729"
+      "last_updated": "2026-01-06T04:48:05.072646"
     },
     {
       "pool_id": "c743eac6-1906-4d96-a7aa-667426ec3cc7",
-      "name": "Pool_85",
-      "current_tvl": 49299754,
-      "current_apy": 3.05079,
+      "name": "Pool_84",
+      "current_tvl": 49299744,
+      "current_apy": 3.20617,
       "chain": "Ethereum",
       "project": "morpho-v1",
       "symbol": "BBQUSDT",
-      "last_updated": "2026-01-06T02:12:59.739733"
+      "last_updated": "2026-01-06T04:48:05.072648"
     },
     {
       "pool_id": "e65588a1-27ad-4e20-9232-68a6cfaccf63",
-      "name": "Pool_86",
-      "current_tvl": 48854929,
+      "name": "Pool_85",
+      "current_tvl": 48841767,
       "current_apy": 0.85991,
       "chain": "Ethereum",
       "project": "aave-v3",
       "symbol": "USDS",
-      "last_updated": "2026-01-06T02:12:59.739735"
+      "last_updated": "2026-01-06T04:48:05.072650"
     },
     {
       "pool_id": "b6b23226-90d9-4cf5-93b8-057a5364705f",
-      "name": "Pool_87",
-      "current_tvl": 47144559,
-      "current_apy": 0.36037,
+      "name": "Pool_86",
+      "current_tvl": 47126872,
+      "current_apy": 0.5513,
       "chain": "Ethereum",
       "project": "fluid-dex",
       "symbol": "USDE-USDT",
-      "last_updated": "2026-01-06T02:12:59.739738"
+      "last_updated": "2026-01-06T04:48:05.072654"
     },
     {
       "pool_id": "1193ef25-862b-43c1-a545-91bbb9678d30",
-      "name": "Pool_88",
-      "current_tvl": 45845155,
-      "current_apy": 0.04636,
+      "name": "Pool_87",
+      "current_tvl": 45841033,
+      "current_apy": 0.04936,
       "chain": "Ethereum",
       "project": "uniswap-v3",
       "symbol": "DAI-USDC",
-      "last_updated": "2026-01-06T02:12:59.739740"
+      "last_updated": "2026-01-06T04:48:05.072657"
     },
     {
       "pool_id": "5b6c56a9-3b81-48ee-bee7-3f0dcd862e4d",
-      "name": "Pool_89",
-      "current_tvl": 44643212,
-      "current_apy": 0.25,
+      "name": "Pool_88",
+      "current_tvl": 44971901,
+      "current_apy": 0.24,
       "chain": "Solana",
       "project": "raydium-amm",
       "symbol": "USDS-USDC",
-      "last_updated": "2026-01-06T02:12:59.739742"
+      "last_updated": "2026-01-06T04:48:05.072659"
+    },
+    {
+      "pool_id": "be50b874-8147-440d-b8ca-f2c202e9ed64",
+      "name": "Pool_89",
+      "current_tvl": 44194698,
+      "current_apy": 3.49869,
+      "chain": "Flare",
+      "project": "clearpool-lending",
+      "symbol": "USDX",
+      "last_updated": "2026-01-06T04:48:05.072662"
     },
     {
       "pool_id": "b37c26c3-848f-45f0-bd75-af97f1674a4d",
       "name": "Pool_90",
-      "current_tvl": 44199191,
+      "current_tvl": 44009347,
       "current_apy": 0.15235,
       "chain": "Cronos",
       "project": "tectonic",
       "symbol": "USDT",
-      "last_updated": "2026-01-06T02:12:59.739745"
-    },
-    {
-      "pool_id": "be50b874-8147-440d-b8ca-f2c202e9ed64",
-      "name": "Pool_91",
-      "current_tvl": 44194698,
-      "current_apy": 3.49927,
-      "chain": "Flare",
-      "project": "clearpool-lending",
-      "symbol": "USDX",
-      "last_updated": "2026-01-06T02:12:59.739747"
+      "last_updated": "2026-01-06T04:48:05.072664"
     },
     {
       "pool_id": "8352355c-5ad7-45c5-aca2-628de224f8d8",
-      "name": "Pool_92",
-      "current_tvl": 42881604,
-      "current_apy": 14.111,
+      "name": "Pool_91",
+      "current_tvl": 43180048,
+      "current_apy": 14.04352,
       "chain": "Ethereum",
       "project": "strata-tranches",
       "symbol": "JRUSDE",
-      "last_updated": "2026-01-06T02:12:59.739749"
+      "last_updated": "2026-01-06T04:48:05.072666"
     },
     {
       "pool_id": "16e00a4d-452c-4884-a512-497ac04cc4d9",
-      "name": "Pool_93",
-      "current_tvl": 42807379,
-      "current_apy": 0.20836,
+      "name": "Pool_92",
+      "current_tvl": 42802744,
+      "current_apy": 0.20846,
       "chain": "Ethereum",
       "project": "fluid-dex",
       "symbol": "GHO-USDC",
-      "last_updated": "2026-01-06T02:12:59.739751"
+      "last_updated": "2026-01-06T04:48:05.072668"
     },
     {
       "pool_id": "1b14dd3c-5708-4903-acbf-b84f2f378a8b",
-      "name": "Pool_94",
-      "current_tvl": 42338822,
-      "current_apy": 4.27096,
+      "name": "Pool_93",
+      "current_tvl": 42334069,
+      "current_apy": 4.03121,
       "chain": "Ethereum",
       "project": "curve-dex",
       "symbol": "DOLA-WSTUSR",
-      "last_updated": "2026-01-06T02:12:59.739753"
+      "last_updated": "2026-01-06T04:48:05.072671"
     },
     {
       "pool_id": "c1cddd25-8e71-4da9-9630-a1858fae4868",
-      "name": "Pool_95",
-      "current_tvl": 41980332,
-      "current_apy": 5.84533,
+      "name": "Pool_94",
+      "current_tvl": 41979901,
+      "current_apy": 5.86458,
       "chain": "Ethereum",
       "project": "pendle",
       "symbol": "SUSDE",
-      "last_updated": "2026-01-06T02:12:59.739755"
+      "last_updated": "2026-01-06T04:48:05.072673"
     },
     {
       "pool_id": "54d98142-75b8-4e8d-95de-5ce48679fc72",
-      "name": "Pool_96",
-      "current_tvl": 41980332,
-      "current_apy": 5.4293,
+      "name": "Pool_95",
+      "current_tvl": 41979901,
+      "current_apy": 5.52328,
       "chain": "Ethereum",
       "project": "pendle",
       "symbol": "SUSDE",
-      "last_updated": "2026-01-06T02:12:59.739758"
+      "last_updated": "2026-01-06T04:48:05.072675"
     },
     {
       "pool_id": "578cffd4-1470-44d0-8c5d-e9d4bd403651",
-      "name": "Pool_97",
-      "current_tvl": 41765250,
-      "current_apy": 5.75,
+      "name": "Pool_96",
+      "current_tvl": 41759160,
+      "current_apy": 5.8,
       "chain": "Ethereum",
       "project": "fluid-lending",
       "symbol": "GHO",
-      "last_updated": "2026-01-06T02:12:59.739760"
-    },
-    {
-      "pool_id": "7da72d09-56ca-4ec5-a45f-59114353e487",
-      "name": "Pool_98",
-      "current_tvl": 41186367,
-      "current_apy": 3.67823,
-      "chain": "Ethereum",
-      "project": "compound-v3",
-      "symbol": "USDC",
-      "last_updated": "2026-01-06T02:12:59.739763"
+      "last_updated": "2026-01-06T04:48:05.072678"
     },
     {
       "pool_id": "5faf730e-2c79-45a2-9459-fbcd185abf18",
-      "name": "Pool_99",
-      "current_tvl": 40475857,
-      "current_apy": 3.76758,
+      "name": "Pool_97",
+      "current_tvl": 40476028,
+      "current_apy": 3.85203,
       "chain": "Ethereum",
       "project": "curve-dex",
       "symbol": "USDC-CRVUSD",
-      "last_updated": "2026-01-06T02:12:59.739765"
+      "last_updated": "2026-01-06T04:48:05.072680"
+    },
+    {
+      "pool_id": "8fbe28b8-140d-4e37-8804-5d2aba4daded",
+      "name": "Pool_98",
+      "current_tvl": 40294871,
+      "current_apy": 4.1159,
+      "chain": "Ethereum",
+      "project": "sparklend",
+      "symbol": "USDT",
+      "last_updated": "2026-01-06T04:48:05.072683"
+    },
+    {
+      "pool_id": "aebb9f47-d15b-4671-8fe3-debb6e913ae2",
+      "name": "Pool_99",
+      "current_tvl": 40237741,
+      "current_apy": 5.02706,
+      "chain": "Arbitrum",
+      "project": "morpho-v1",
+      "symbol": "GTUSDCC",
+      "last_updated": "2026-01-06T04:48:05.072687"
     }
   ],
   "export_info": {
-    "export_timestamp": "2026-01-06T02:12:59.832128",
+    "export_timestamp": "2026-01-06T04:48:05.166780",
     "total_pools": 100
   }
 }
