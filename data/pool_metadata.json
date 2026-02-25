@@ -3,36 +3,36 @@
     {
       "pool_id": "66985a81-9c51-46ca-9977-42b4fe7bc6df",
       "name": "Pool_1",
-      "current_tvl": 3536925167,
-      "current_apy": 3.57973,
+      "current_tvl": 3537233267,
+      "current_apy": 3.57941,
       "chain": "Ethereum",
       "project": "ethena-usde",
       "symbol": "SUSDE",
-      "last_updated": "2026-02-24T20:47:47.721621"
+      "last_updated": "2026-02-25T02:46:11.505106"
     },
     {
       "pool_id": "43641cf5-a92e-416b-bce9-27113d3c0db6",
       "name": "Pool_2",
-      "current_tvl": 3204711034,
+      "current_tvl": 3226163921,
       "current_apy": 4.5498,
       "chain": "Ethereum",
       "project": "maple",
       "symbol": "USDC",
-      "last_updated": "2026-02-24T20:47:47.721625"
+      "last_updated": "2026-02-25T02:46:11.505111"
     },
     {
       "pool_id": "e0672197-9f3e-4414-bca5-e6b4c90aa469",
       "name": "Pool_13",
-      "current_tvl": 331848118,
-      "current_apy": 4.19441,
+      "current_tvl": 331715020,
+      "current_apy": 4.14658,
       "chain": "Base",
       "project": "morpho-v1",
       "symbol": "GTUSDCP",
-      "last_updated": "2026-02-24T20:47:47.721627"
+      "last_updated": "2026-02-25T02:46:11.505113"
     }
   ],
   "export_info": {
-    "export_timestamp": "2026-02-24T20:47:47.727684",
+    "export_timestamp": "2026-02-25T02:46:11.510383",
     "total_pools": 3
   }
 }
